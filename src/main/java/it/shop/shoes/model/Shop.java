@@ -1,12 +1,8 @@
 package it.shop.shoes.model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data // Getters/Setters/ToString
@@ -15,8 +11,7 @@ import lombok.Data;
 public class Shop {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idShop;
+	private Long id_negozio;
 	
 	@Column(nullable = true, name = "nome")
 	private String branchName;
@@ -25,8 +20,8 @@ public class Shop {
 	private String branchLocality;
 
 	public Shop() {}
-	public Shop(Long idShop, String branchName, String branchLocality) {
-		this.idShop = idShop;
+	public Shop(Long id_negozio, String branchName, String branchLocality) {
+		this.id_negozio = id_negozio;
 		this.branchName = branchName;
 		this.branchLocality = branchLocality;
 	}

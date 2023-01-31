@@ -1,12 +1,12 @@
 package it.shop.shoes.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data // Getters/Setters/ToString
@@ -17,7 +17,7 @@ public class Transaction {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idTransaction;
+	private Long id_transazione;
 	
 	@Column(nullable = true, name = "numero_tessera")
 	private String fidelityNumber;
@@ -25,8 +25,8 @@ public class Transaction {
 	@Column(nullable = true, name = "cliente_id")
 	private String clientId;
 
-	public Transaction(Long idTransaction, String fidelityNumber, String clientId) {
-		this.idTransaction = idTransaction;
+	public Transaction(Long id_transazione, String fidelityNumber, String clientId) {
+		this.id_transazione = id_transazione;
 		this.fidelityNumber = fidelityNumber;
 		this.clientId = clientId;
 	}

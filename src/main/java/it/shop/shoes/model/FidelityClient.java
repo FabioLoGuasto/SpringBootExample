@@ -1,12 +1,11 @@
 package it.shop.shoes.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
@@ -16,7 +15,7 @@ public class FidelityClient {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idClient;
+	private Long id_cliente;
 	
 	@Column(nullable = true,name = "cf")
 	private int fiscalCodeClient;
@@ -29,8 +28,8 @@ public class FidelityClient {
 
 	public FidelityClient() {}
 
-	public FidelityClient(Long idClient, int fiscalCodeClient, int localityClient, int provinceClient) {
-		this.idClient = idClient;
+	public FidelityClient(Long id_cliente, int fiscalCodeClient, int localityClient, int provinceClient) {
+		this.id_cliente = id_cliente;
 		this.fiscalCodeClient = fiscalCodeClient;
 		this.localityClient = localityClient;
 		this.provinceClient = provinceClient;
