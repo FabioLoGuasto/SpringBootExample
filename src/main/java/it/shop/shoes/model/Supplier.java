@@ -1,10 +1,18 @@
 package it.shop.shoes.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -14,7 +22,7 @@ import lombok.Data;
 public class Supplier {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id_fornitore; 
 	
 	@Column(nullable = true, name = "cod_fornitore")
@@ -34,5 +42,11 @@ public class Supplier {
 		this.nation = nation;
 	}
 	
+
+//  mettere qua fornitore_id è errato perchè è il nome della colonna. supplierId è il nome dell'attributo nella classe Article
+	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@JsonManagedReference
+	private Set <Article> listArticles = new HashSet<>(); // set non ha duplicati
+
 	
 }

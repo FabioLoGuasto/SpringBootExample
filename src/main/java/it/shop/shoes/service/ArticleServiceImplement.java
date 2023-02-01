@@ -27,6 +27,7 @@ public class ArticleServiceImplement implements ArticleService{
 		return articleRepository.save(art);
 	}
 	
+	
 	/**
 	 * method for get the lisf of field ArticleDto
 	 */
@@ -38,6 +39,7 @@ public class ArticleServiceImplement implements ArticleService{
 				.collect(Collectors.toList());
 	}
 
+	
 	/**
 	 * this method get a list of all articles from all shop
 	 */
@@ -46,6 +48,7 @@ public class ArticleServiceImplement implements ArticleService{
 		return articleRepository.findAll();
 	}
 
+	
 	/**
 	 * this method update a selected field of article by id_articolo
 	 */
@@ -54,6 +57,7 @@ public class ArticleServiceImplement implements ArticleService{
 		art.setId_articolo(id);
 		articleRepository.save(art);
 	}
+	
 	
 	/**
 	 * DA FARE ---------------------------------------------------------------------------------------------------------------
@@ -66,6 +70,7 @@ public class ArticleServiceImplement implements ArticleService{
 		// POI TRAMITE ITERAZIONE POTREI MODIFICARLI UNO PER UNO DANDO UN INPUT UGUALE PER TUTTI
 	}
 
+	
 	/**
 	 * this method delete an article by id_articolo
 	 */
@@ -73,6 +78,7 @@ public class ArticleServiceImplement implements ArticleService{
 	public void delete(Long id) {
 		articleRepository.deleteById(id);		
 	}
+	
 	
 	/**
 	 * this method convert fiel Article in field ArticleDto
@@ -92,6 +98,7 @@ public class ArticleServiceImplement implements ArticleService{
 		dto.setSupplierId(art.getSupplierId());
 		return dto;
 	}
+	
 	
 	/**
 	 * this method convert fiel ArticleDto in field Article

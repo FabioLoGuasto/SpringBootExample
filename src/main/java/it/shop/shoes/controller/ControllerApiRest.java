@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -79,6 +78,7 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/insertArticle
+	 * al momento è in uso il costruttore senza transazione_id
 	 * @param art
 	 * @return
 	 */
@@ -100,6 +100,7 @@ public class ControllerApiRest {
 	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
 	 * localhost:8080/api/insertArticleDto
 	 * per farlo funzionare ho cmq bisogno di un costruttore senza transazione_id nella entity Article
+	 * al momento è in uso il costruttore senza transazione_id
 	 * @param art
 	 * @return
 	 */
