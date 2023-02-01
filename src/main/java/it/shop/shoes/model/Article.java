@@ -33,17 +33,6 @@ public class Article {
 	
 	/**
 	 * Constructor without transaction_id
-	 * @param id_articolo
-	 * @param code
-	 * @param size
-	 * @param negozioId
-	 * @param brand
-	 * @param category
-	 * @param price
-	 * @param discount
-	 * @param season
-	 * @param sellOut
-	 * @param supplierId
 	 */
 	public Article(Long id_articolo, String code, int size, int negozioId, String brand, String category, double price,
 			int discount, String season, int sellOut, int supplierId) {
@@ -59,9 +48,6 @@ public class Article {
 		this.sellOut = sellOut;
 		this.supplierId = supplierId;
 	}
-
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

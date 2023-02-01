@@ -1,6 +1,8 @@
 package it.shop.shoes.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -11,7 +13,11 @@ import lombok.Data;
 public class Shop {
 	
 	@Id
-	private Long id_negozio;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id_univoco_negozio;
+	
+	@Column(nullable = true, name = "numero_negozio")
+	private int shopNumber;
 	
 	@Column(nullable = true, name = "nome")
 	private String branchName;
@@ -20,8 +26,9 @@ public class Shop {
 	private String branchLocality;
 
 	public Shop() {}
-	public Shop(Long id_negozio, String branchName, String branchLocality) {
-		this.id_negozio = id_negozio;
+	public Shop(Long id_univoco_negozio, int shopNumber, String branchName, String branchLocality) {
+		this.id_univoco_negozio = id_univoco_negozio;
+		this.shopNumber = shopNumber;
 		this.branchName = branchName;
 		this.branchLocality = branchLocality;
 	}

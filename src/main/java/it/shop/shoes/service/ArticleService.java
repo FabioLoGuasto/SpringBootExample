@@ -14,6 +14,7 @@ public interface ArticleService {
 	public Article insert(Article a); 
 	public List<Article> getArticles();
 	public void update(Long id,Article a);
+	public void updateFromCode(Long id, Article a);
 	public void delete (Long id);
 	
 	public ArticleDto EntityToDto(Article art);
