@@ -1,9 +1,5 @@
 package it.shop.shoes.model;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,16 +12,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Data // Getters/Setters/ToString
 @Entity
+@NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
 public class Article {
 	
-	public Article() {}
-	public Article(Long id_articolo, String code, int size, Shop negozioId, String brand, String category, double price,
+
+	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
 			int discount, String season, int sellOut, Supplier supplierId, Transaction transactionId) {
-		this.id_articolo = id_articolo;
+		this.idArticolo = idArticolo;
 		this.code = code;
 		this.size = size;
 		this.negozioId = negozioId;
@@ -42,9 +40,9 @@ public class Article {
 	/**
 	 * Constructor without transaction_id
 	 */
-	public Article(Long id_articolo, String code, int size, Shop negozioId, String brand, String category, double price,
+	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
 			int discount, String season, int sellOut, Supplier supplierId) {
-		this.id_articolo = id_articolo;
+		this.idArticolo = idArticolo;
 		this.code = code;
 		this.size = size;
 		this.negozioId = negozioId;
@@ -59,7 +57,8 @@ public class Article {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id_articolo;
+	@Column(name = "id_articolo")
+	private Long idArticolo;
 	
 	@Column(nullable = true, name = "codice", length=10)
 	private String code;

@@ -16,7 +16,7 @@ public class SupplierServiceImplement implements SupplierService{
 	
 	@Override
 	public Supplier insert(Supplier s) {
-		Supplier supplier = new Supplier(s.getId_fornitore(), s.getSupplierCode(), s.getCompanyName(), s.getNation());
+		Supplier supplier = new Supplier(s.getIdFornitore(), s.getSupplierCode(), s.getCompanyName(), s.getNation());
 		return supplierRepository.save(supplier);
 	}
 
@@ -27,7 +27,7 @@ public class SupplierServiceImplement implements SupplierService{
 
 	@Override
 	public void update(Long id, Supplier s) {
-		s.setId_fornitore(id);
+		s.setIdFornitore(id);
 		supplierRepository.save(s);
 		
 	}

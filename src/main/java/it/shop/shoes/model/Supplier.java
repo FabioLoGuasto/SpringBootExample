@@ -3,9 +3,7 @@ package it.shop.shoes.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,7 +13,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name="supplier", schema="negozio_scarpe")
@@ -23,7 +23,8 @@ public class Supplier {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id_fornitore; 
+	@Column(name = "id_fornitore")
+	private Long idFornitore; 
 	
 	@Column(nullable = true, name = "cod_fornitore")
 	private int supplierCode;
@@ -34,9 +35,8 @@ public class Supplier {
 	@Column(nullable = true, name = "nazione")
 	private String nation;
 	
-	public Supplier() {}
-	public Supplier(Long id_fornitore, int supplierCode, String companyName, String nation) {
-		this.id_fornitore = id_fornitore;
+	public Supplier(Long idFornitore, int supplierCode, String companyName, String nation) {
+		this.idFornitore = idFornitore;
 		this.supplierCode = supplierCode;
 		this.companyName = companyName;
 		this.nation = nation;

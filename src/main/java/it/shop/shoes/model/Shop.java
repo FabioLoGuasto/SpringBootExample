@@ -6,7 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data // Getters/Setters/ToString
 @Entity
 @Table(name="shop", schema="negozio_scarpe")
@@ -14,7 +16,8 @@ public class Shop {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id_univoco_negozio;
+	@Column(name = "id_univoco_negozio")
+	private Long idUnivocoNegozio;
 	
 	@Column(nullable = true, name = "numero_negozio")
 	private int shopNumber;
@@ -25,9 +28,9 @@ public class Shop {
 	@Column(nullable = true, name = "localita")
 	private String branchLocality;
 
-	public Shop() {}
-	public Shop(Long id_univoco_negozio, int shopNumber, String branchName, String branchLocality) {
-		this.id_univoco_negozio = id_univoco_negozio;
+
+	public Shop(Long idUnivocoNegozio, int shopNumber, String branchName, String branchLocality) {
+		this.idUnivocoNegozio = idUnivocoNegozio;
 		this.shopNumber = shopNumber;
 		this.branchName = branchName;
 		this.branchLocality = branchLocality;

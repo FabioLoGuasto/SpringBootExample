@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.shop.shoes.dto.ArticleDto;
+import it.shop.shoes.dto.ArticleDto2;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.model.FidelityClient;
 import it.shop.shoes.model.Shop;
@@ -28,7 +29,6 @@ import it.shop.shoes.service.FidelityClientService;
 import it.shop.shoes.service.ShopService;
 import it.shop.shoes.service.SupplierService;
 import it.shop.shoes.service.TransactionService;
-import jakarta.persistence.FetchType;
 
 /**
  * @author fabio
@@ -120,6 +120,25 @@ public class ControllerApiRest {
 			List<Article> listArticles = this.articleService.getArticles();
 			List<ArticleDto> listArticlesDto = articleService.getAllArticleDto(listArticles);
 			return new ResponseEntity <List<ArticleDto>> (listArticlesDto,HttpStatus.OK);
+		}catch(Exception e) {
+			logger.error("ERROR " + e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	/**
+	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
+	 * localhost:8080/api/getAllArticlesDto2
+	 * This method return a list ArticleDto2 (only code & brand of Article)
+	 * @return listArticles
+	 */
+	@GetMapping(path ="/getAllArticlesDto2", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<ArticleDto2>> getAllArticlesDto2(){
+		logger.info("GET ALL ARTICLES WITH DTO2");
+		try {
+			List<Article> listArticles = this.articleService.getArticles();
+			List<ArticleDto2> listArticlesDto = articleService.getAllArticleDto2(listArticles);
+			return new ResponseEntity <List<ArticleDto2>> (listArticlesDto,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR " + e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -1,12 +1,7 @@
 package it.shop.shoes.model;
 
-
 import java.util.HashSet;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -20,7 +15,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data // Getters/Setters/ToString
 @Entity
 @Table(name="transaction", schema="negozio_scarpe")
@@ -29,7 +26,8 @@ public class Transaction {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id_transazione;
+	@Column(name = "id_transazione")
+	private Long idTransazione;
 	
 	@Column(nullable = true, name = "numero_tessera")
 	private String fidelityNumber;
@@ -43,10 +41,9 @@ public class Transaction {
 //	@JsonManagedReference
 	private Set<Article> listArticleOnTransaction = new HashSet<>();	
 	
-	
-	public Transaction() {}
-	public Transaction(Long id_transazione, String fidelityNumber, FidelityClient clientId) {
-		this.id_transazione = id_transazione;
+
+	public Transaction(Long idTransazione, String fidelityNumber, FidelityClient clientId) {
+		this.idTransazione = idTransazione;
 		this.fidelityNumber = fidelityNumber;
 		this.clientId = clientId;
 	}

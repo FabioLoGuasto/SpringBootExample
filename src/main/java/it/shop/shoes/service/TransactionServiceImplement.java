@@ -16,7 +16,7 @@ public class TransactionServiceImplement implements TransactionService{
 	
 	@Override
 	public Transaction insert(Transaction t) {
-		Transaction transaction = new Transaction(t.getId_transazione(), t.getFidelityNumber(), t.getClientId());
+		Transaction transaction = new Transaction(t.getIdTransazione(), t.getFidelityNumber(), t.getClientId());
 		return transactionRepository.save(transaction);
 	}
 
@@ -27,7 +27,7 @@ public class TransactionServiceImplement implements TransactionService{
 
 	@Override
 	public void update(Long id, Transaction t) {
-		t.setId_transazione(id);
+		t.setIdTransazione(id);
 		transactionRepository.save(t);
 	}
 

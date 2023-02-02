@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.dto.ArticleDto;
+import it.shop.shoes.dto.ArticleDto2;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.repository.ArticleRepository;
 
@@ -22,8 +23,8 @@ public class ArticleServiceImplement implements ArticleService{
 	 */
 	@Override
 	public Article insert(Article a) {
-//		Article art = new Article(a.getId_articolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId(), a.getTransactionId()); // completo
-		Article art = new Article(a.getId_articolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId()); 
+//		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId(), a.getTransactionId()); // completo
+		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId()); 
 		return articleRepository.save(art);
 	}
 	
@@ -36,6 +37,18 @@ public class ArticleServiceImplement implements ArticleService{
 		return articleRepository.findAll()
 				.stream()
 				.map(this::EntityToDto)
+				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * method for get the lisf of field ArticleDto2
+	 * return only code e brand of Article
+	 */
+	@Override
+	public List<ArticleDto2> getAllArticleDto2(List<Article>art){ // -------->>>>> ???????????????
+		return articleRepository.findAll()
+				.stream()
+				.map(this::EntityToDto2)
 				.collect(Collectors.toList());
 	}
 
@@ -54,7 +67,7 @@ public class ArticleServiceImplement implements ArticleService{
 	 */
 	@Override
 	public void update(Long id, Article art) {
-		art.setId_articolo(id);
+		art.setIdArticolo(id);
 		articleRepository.save(art);
 	}
 	
@@ -96,6 +109,17 @@ public class ArticleServiceImplement implements ArticleService{
 		dto.setSeason(art.getSeason());
 		dto.setSellOut(art.getSellOut());
 		dto.setSupplierId(art.getSupplierId());
+		return dto;
+	}
+	
+	/**
+	 * this method convert fiel Article in field ArticleDto
+	 */
+	@Override
+	public ArticleDto2 EntityToDto2(Article art) {
+		ArticleDto2 dto = new ArticleDto2();
+		dto.setCode(art.getCode());
+		dto.setBrand(art.getBrand());
 		return dto;
 	}
 	

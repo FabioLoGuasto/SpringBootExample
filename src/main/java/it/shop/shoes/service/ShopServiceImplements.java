@@ -17,7 +17,7 @@ public class ShopServiceImplements implements ShopService{
 	
 	@Override
 	public Shop insert(Shop s) {
-		Shop shop = new Shop(s.getId_univoco_negozio(),s.getShopNumber(), s.getBranchName(), s.getBranchLocality());
+		Shop shop = new Shop(s.getIdUnivocoNegozio(),s.getShopNumber(), s.getBranchName(), s.getBranchLocality());
 		return shopRepository.save(shop);
 	}
 
@@ -28,7 +28,7 @@ public class ShopServiceImplements implements ShopService{
 
 	@Override
 	public void update(Long id, Shop s) {
-		s.setId_univoco_negozio(id);
+		s.setIdUnivocoNegozio(id);
 		shopRepository.save(s);
 	}
 

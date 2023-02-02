@@ -15,7 +15,7 @@ public class FidelityClientImplements implements FidelityClientService{
 	
 	@Override
 	public FidelityClient insert(FidelityClient f) {
-		FidelityClient fc = new FidelityClient(f.getId_cliente(), f.getFiscalCodeClient(), f.getLocalityClient(), f.getProvinceClient());
+		FidelityClient fc = new FidelityClient(f.getIdCliente(), f.getFiscalCodeClient(), f.getLocalityClient(), f.getProvinceClient());
 		return fidelityClientRepository.save(fc);
 	}
 
@@ -26,7 +26,7 @@ public class FidelityClientImplements implements FidelityClientService{
 
 	@Override
 	public void update(Long id, FidelityClient f) {
-		f.setId_cliente(id);
+		f.setIdCliente(id);
 		fidelityClientRepository.save(f);
 	}
 
