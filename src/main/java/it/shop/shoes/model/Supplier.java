@@ -44,9 +44,9 @@ public class Supplier {
 	
 
 //  mettere qua fornitore_id è errato perchè è il nome della colonna. supplierId è il nome dell'attributo nella classe Article
-	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class , fetch = FetchType.LAZY)
 //	@JsonManagedReference
-	private Set <Article> listArticles = new HashSet<>(); // set non ha duplicati
+	private Set <Article> listArticlesOfSupplied = new HashSet<>(); // set non ha duplicati
 
 	
 }

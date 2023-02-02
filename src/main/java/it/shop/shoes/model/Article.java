@@ -16,8 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-
-
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Data // Getters/Setters/ToString
 @Entity
 @Table(name="article", schema="negozio_scarpe")
@@ -25,7 +24,7 @@ public class Article {
 	
 	public Article() {}
 	public Article(Long id_articolo, String code, int size, Shop negozioId, String brand, String category, double price,
-			int discount, String season, int sellOut, Supplier supplierId, int transactionId) {
+			int discount, String season, int sellOut, Supplier supplierId, Transaction transactionId) {
 		this.id_articolo = id_articolo;
 		this.code = code;
 		this.size = size;
@@ -68,7 +67,7 @@ public class Article {
 	@Column(name = "taglia")
 	private int size;
 	
-	@OneToOne(fetch = FetchType.EAGER, targetEntity = Shop.class, cascade = CascadeType.MERGE)
+	@OneToOne(fetch = FetchType.EAGER, targetEntity = Shop.class)
 	@JoinColumn(nullable = true,name = "negozio_id")
 	private Shop negozioId;
 	
@@ -90,13 +89,15 @@ public class Article {
 	@Column(columnDefinition = "default '1'",name = "venduto")
 	private Integer sellOut;
 	
-	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Supplier.class, cascade = CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Supplier.class, cascade = CascadeType.REFRESH)
 	@JoinColumn(nullable = true, name = "fornitore_id")
 //	@JsonBackReference
 	private Supplier supplierId;
 	
-	@Column(nullable = true,name = "transazione_id")
-	private Integer transactionId;
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Transaction.class, cascade = CascadeType.REFRESH)
+	@JoinColumn(nullable = true,name = "transazione_id")
+//	@JsonBackReference
+	private Transaction transactionId;
 	
 
 }

@@ -19,11 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.model.Article;
+import it.shop.shoes.model.FidelityClient;
 import it.shop.shoes.model.Shop;
 import it.shop.shoes.model.Supplier;
+import it.shop.shoes.model.Transaction;
 import it.shop.shoes.service.ArticleService;
+import it.shop.shoes.service.FidelityClientService;
 import it.shop.shoes.service.ShopService;
 import it.shop.shoes.service.SupplierService;
+import it.shop.shoes.service.TransactionService;
+import jakarta.persistence.FetchType;
 
 /**
  * @author fabio
@@ -32,31 +37,14 @@ import it.shop.shoes.service.SupplierService;
 @RestController
 @RequestMapping(value = "/api")
 public class ControllerApiRest {
-	
-	/**
-	 * try controller
-	 * @return
-	 */
-	@RequestMapping("/")
-	public String welcomepage2() {
-		return "funziona /";
-	}
-	@GetMapping("/a")
-	public String welcomepage2sssss() {
-		return "funziona A";
-	}
 		
 	public static final Logger logger = LoggerFactory.getLogger(ControllerApiRest.class);
 	
-	@Autowired
-	ArticleService articleService;
-	
-	@Autowired
-	ShopService shopService;
-	
-	@Autowired
-	SupplierService supplierService;
-	
+	@Autowired ArticleService articleService;
+	@Autowired ShopService shopService;
+	@Autowired SupplierService supplierService;
+	@Autowired TransactionService transactionService;
+	@Autowired FidelityClientService fidelityClientService;
 // ---------------------------------------------------------------------------------- ARTICLE	
 	/**
 	 * localhost:8080/api/getAllArticles
@@ -335,15 +323,164 @@ public class ControllerApiRest {
 	}
 	
 	
+// --------------------------------------------------------------------------------------------------- TRANSACTION	
+	
+	
+	/**
+	 * localhost:8080/api/getAllTransactions
+	 * This method return a list with all transactions
+	 * @return listTransactions
+	 */
+	@GetMapping(path ="/getAllTransactions", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<Transaction>> getAllTransactions(){
+		logger.info("GET ALL TRANSACTIONS");
+		try {
+			List<Transaction> listTransactions = transactionService.getTransactions();
+			return new ResponseEntity <List<Transaction>> (listTransactions,HttpStatus.OK);
+		}catch(Exception e) {
+			logger.error("ERROR " + e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	
+	/**
+	 * localhost:8080/api/insertTransaction
+	 * This method insert a new transaction
+	 * @param 
+	 * @return
+	 */
+	@PostMapping(path ="/insertTransaction", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Transaction> insertTransaction(@RequestBody Transaction t){
+		logger.info("INSERT NEW TRANSACTION");
+		try {
+			Transaction insTransaction = transactionService.insert(t);
+			logger.info("INSERT NEW TRANSACTION OK");
+			return new ResponseEntity<Transaction>(insTransaction,HttpStatus.CREATED);
+		}catch (Exception e) {
+			logger.error("ERROR: \n", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}  
+	}
+	
+	
+	/**
+	 * localhost:8080/api/updateTransactionById/
+	 * this method update one field of Supplier by id_transazione
+	 * @param id
+	 * @param art
+	 * @return
+	 */
+	@PutMapping("/updateTransactionById/{id}")
+	public ResponseEntity <String> updateTransactionById(@PathVariable("id") Long id, @RequestBody Transaction t){
+		logger.info("UPDATE TRANSACION BY ID");
+		 try { 
+			 transactionService.update(id, t);
+			 return new ResponseEntity<String>("TRANSACTION MODIFIED",HttpStatus.OK);
+		 }catch(Exception e) {			 
+			 logger.error("ERROR: \n", e);
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		 }
+	}
+	
+	/**
+	 * localhost:8080/api/deleteTransactionById/
+	 * this method delete one field by id_transazione
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping(path = "/deleteTransactionById/{id}")
+	public ResponseEntity <String> deleteTransactionById(@PathVariable("id") Long id){
+		logger.info("DELETE ONE TRANSACTION");
+		try {
+			transactionService.delete(id);
+			logger.info("TRANSACTION " + id + " DELETE !!!");
+			return new ResponseEntity <String>("DELETE",HttpStatus.OK);
+		}catch(Exception e) {
+			  logger.error("ERROR: \n", e);
+			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		  }
+	}
 	
 	
 	
+// -------------------------------------------------------------------------------------------------- FIDELITY CLIENT	
+	
+	/**
+	 * localhost:8080/api/getAllFidelityClients
+	 * This method return a list with all Fidelity Clients
+	 * @return listFidelityClients
+	 */
+	@GetMapping(path ="/getAllFidelityClients", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<FidelityClient>> getAllFidelityClients(){
+		logger.info("GET ALL FIDELITY CLIENT");
+		try {
+			List<FidelityClient> listFidelityClients = fidelityClientService.getFidelityClients();
+			return new ResponseEntity <List<FidelityClient>> (listFidelityClients,HttpStatus.OK);
+		}catch(Exception e) {
+			logger.error("ERROR " + e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 	
 	
+	/**
+	 * localhost:8080/api/insertFidelityClient
+	 * This method insert a new fidelity client
+	 * @param 
+	 * @return
+	 */
+	@PostMapping(path ="/insertFidelityClient", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<FidelityClient> insertFidelityClient(@RequestBody FidelityClient t){
+		logger.info("INSERT NEW FIDELITY CLIENT");
+		try {
+			FidelityClient insFidelityClient = fidelityClientService.insert(t);
+			logger.info("INSERT NEW FIDELITY CLIENT OK");
+			return new ResponseEntity<FidelityClient>(insFidelityClient,HttpStatus.CREATED);
+		}catch (Exception e) {
+			logger.error("ERROR: \n", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}  
+	}
 	
 	
+	/**
+	 * localhost:8080/api/updateFidelityClientById/
+	 * this method update one field of fidelityClient by id_cliente
+	 * @param id
+	 * @param art
+	 * @return
+	 */
+	@PutMapping("/updateFidelityClientById/{id}")
+	public ResponseEntity <String> updateFidelityClientById(@PathVariable("id") Long id, @RequestBody FidelityClient t){
+		logger.info("UPDATE FIDELITY CLIENT BY ID");
+		 try { 
+			 fidelityClientService.update(id, t);
+			 return new ResponseEntity<String>("FIDELITY CLIENT MODIFIED",HttpStatus.OK);
+		 }catch(Exception e) {			 
+			 logger.error("ERROR: \n", e);
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		 }
+	}
 	
-	
+	/**
+	 * localhost:8080/api/deleteFidelityClientById/
+	 * this method delete one field by id_cliente
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping(path = "/deleteFidelityClientById/{id}")
+	public ResponseEntity <String> deleteFidelityClientById(@PathVariable("id") Long id){
+		logger.info("DELETE ONE FIDELITY CLIENT");
+		try {
+			fidelityClientService.delete(id);
+			logger.info("FIDELITY CLIENT " + id + " DELETE !!!");
+			return new ResponseEntity <String>("DELETE",HttpStatus.OK);
+		}catch(Exception e) {
+			  logger.error("ERROR: \n", e);
+			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		  }
+	}
 	
 	
 	
