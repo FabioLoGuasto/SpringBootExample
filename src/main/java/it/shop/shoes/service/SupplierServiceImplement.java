@@ -14,17 +14,26 @@ public class SupplierServiceImplement implements SupplierService{
 	@Autowired
 	private SupplierRepository supplierRepository;
 	
+	/**
+	 * insert new supplier
+	 */
 	@Override
 	public Supplier insert(Supplier s) {
 		Supplier supplier = new Supplier(s.getIdFornitore(), s.getSupplierCode(), s.getCompanyName(), s.getNation());
 		return supplierRepository.save(supplier);
 	}
 
+	/**
+	 * get list of suppliers
+	 */
 	@Override
 	public List<Supplier> getSuppliers() {
 		return supplierRepository.findAll();
 	}
 
+	/**
+	 * update field of supplier by id
+	 */
 	@Override
 	public void update(Long id, Supplier s) {
 		s.setIdFornitore(id);
@@ -32,6 +41,9 @@ public class SupplierServiceImplement implements SupplierService{
 		
 	}
 
+	/**
+	 * delete supplier by id
+	 */
 	@Override
 	public void delete(Long id) {
 		supplierRepository.deleteById(id);

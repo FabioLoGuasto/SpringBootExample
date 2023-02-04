@@ -21,17 +21,29 @@ import lombok.NoArgsConstructor;
 @Table(name="supplier", schema="negozio_scarpe")
 public class Supplier {
 	
+	/**
+	 * unique id of supplier
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id_fornitore")
 	private Long idFornitore; 
 	
+	/**
+	 * code of supplier
+	 */
 	@Column(nullable = true, name = "cod_fornitore")
 	private int supplierCode;
 	
+	/**
+	 * name of company
+	 */
 	@Column(nullable = true, name = "ragione_sociale")
 	private String companyName;
 
+	/**
+	 * nation where there the company
+	 */
 	@Column(nullable = true, name = "nazione")
 	private String nation;
 	
@@ -43,9 +55,10 @@ public class Supplier {
 	}
 	
 
-//  mettere qua fornitore_id è errato perchè è il nome della colonna. supplierId è il nome dell'attributo nella classe Article
+	/**
+	 * supplier's list of items
+	 */
 	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class , fetch = FetchType.LAZY)
-//	@JsonManagedReference
 	private Set <Article> listArticlesOfSupplied = new HashSet<>(); // set non ha duplicati
 
 	

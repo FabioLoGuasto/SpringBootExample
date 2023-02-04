@@ -14,17 +14,29 @@ import lombok.NoArgsConstructor;
 @Table(name="shop", schema="negozio_scarpe")
 public class Shop {
 	
+	/**
+	 * unique id of shop
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_univoco_negozio")
 	private Long idUnivocoNegozio;
 	
+	/**
+	 * number of shop
+	 */
 	@Column(nullable = true, name = "numero_negozio")
 	private int shopNumber;
 	
+	/**
+	 * shop branch name
+	 */
 	@Column(nullable = true, name = "nome")
 	private String branchName;
 	
+	/**
+	 * locality where there the shop branch
+	 */
 	@Column(nullable = true, name = "localita")
 	private String branchLocality;
 

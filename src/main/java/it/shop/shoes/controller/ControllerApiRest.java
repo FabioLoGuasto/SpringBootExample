@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.shop.shoes.dto.ArticleDto;
-import it.shop.shoes.dto.ArticleDto2;
+import it.shop.shoes.dto.ArticleDtoExample;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.model.FidelityClient;
 import it.shop.shoes.model.Shop;
@@ -66,9 +66,10 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/insertArticle
-	 * al momento è in uso il costruttore senza transazione_id
-	 * @param art
-	 * @return
+	 * This is the method for insert new Article.
+	 * Excludes the transaction id field because by default it must be null
+	 * @param art : object Article
+	 * @return insArticle : return new Article
 	 */
 	@PostMapping(path ="/insertArticle", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Article> insertArticle(@RequestBody Article art){
@@ -87,10 +88,9 @@ public class ControllerApiRest {
 	/**
 	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
 	 * localhost:8080/api/insertArticleDto
-	 * per farlo funzionare ho cmq bisogno di un costruttore senza transazione_id nella entity Article
-	 * al momento è in uso il costruttore senza transazione_id
-	 * @param art
-	 * @return
+	 * This is the method for insert new Article.
+	 * @param dto : Object ArticleDto
+	 * @return articleDto : return new Article
 	 */
 	@PostMapping(path ="/insertArticleDto", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ArticleDto> insertArticleDto(@RequestBody ArticleDto dto){
@@ -129,16 +129,16 @@ public class ControllerApiRest {
 	/**
 	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
 	 * localhost:8080/api/getAllArticlesDto2
-	 * This method return a list ArticleDto2 (only code & brand of Article)
-	 * @return listArticles
+	 * This method return a list ArticleDtoExample (only code & brand of Article)
+	 * @return listArticlesDto 
 	 */
 	@GetMapping(path ="/getAllArticlesDto2", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<ArticleDto2>> getAllArticlesDto2(){
+	public ResponseEntity <List<ArticleDtoExample>> getAllArticlesDto2(){
 		logger.info("GET ALL ARTICLES WITH DTO2");
 		try {
 			List<Article> listArticles = this.articleService.getArticles();
-			List<ArticleDto2> listArticlesDto = articleService.getAllArticleDto2(listArticles);
-			return new ResponseEntity <List<ArticleDto2>> (listArticlesDto,HttpStatus.OK);
+			List<ArticleDtoExample> listArticlesDto = articleService.getAllArticleDto2(listArticles);
+			return new ResponseEntity <List<ArticleDtoExample>> (listArticlesDto,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR " + e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -147,10 +147,10 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/updateArticleById/
-	 * this method update one field of article by id_articolo
-	 * @param id
-	 * @param art
-	 * @return
+	 * This method update one field of article by idArticolo
+	 * @param id : field id of Article
+	 * @param art : Object Article
+	 * @return String 
 	 */
 	@PutMapping("/updateArticleById/{id}")
 	public ResponseEntity <String> updateArticleById(@PathVariable("id") Long id, @RequestBody Article art){
@@ -166,9 +166,9 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/deleteArticleById/
-	 * this method delete one field by id_articolo
-	 * @param id
-	 * @return
+	 * This method delete one field by idArticolo
+	 * @param id : id of Article
+	 * @return String 
 	 */
 	@DeleteMapping(path = "/deleteArticleById/{id}")
 	public ResponseEntity <String> deleteArticleById(@PathVariable("id") Long id){
@@ -207,16 +207,16 @@ public class ControllerApiRest {
 	/**
 	 * localhost:8080/api/insertShop
 	 * This method insert a new shop
-	 * @param 
-	 * @return
+	 * @param shop : Shop Object
+	 * @return insertShop : return new shop
 	 */
 	@PostMapping(path ="/insertShop", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Shop> insertShop(@RequestBody Shop s){
+	public ResponseEntity<Shop> insertShop(@RequestBody Shop shop){
 		logger.info("INSERT NEW SHOP");
 		try {
-			Shop insShop = shopService.insert(s);
+			Shop insertShop = shopService.insert(shop);
 			logger.info("INSERT NEW SHOP OK");
-			return new ResponseEntity<Shop>(insShop,HttpStatus.CREATED);
+			return new ResponseEntity<Shop>(insertShop,HttpStatus.CREATED);
 		}catch (Exception e) {
 			logger.error("ERROR: \n", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -226,16 +226,16 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/updateShopById/
-	 * this method update one field of Shop by id_negozio
-	 * @param id
-	 * @param art
-	 * @return
+	 * This method update one field of Shop by idShop
+	 * @param id : id of selected shop
+	 * @param shop : Shop Object
+	 * @return String
 	 */
 	@PutMapping("/updateShopById/{id}")
-	public ResponseEntity <String> updateShopById(@PathVariable("id") Long id, @RequestBody Shop s){
+	public ResponseEntity <String> updateShopById(@PathVariable("id") Long id, @RequestBody Shop shop){
 		logger.info("UPDATE SHOP BY ID");
 		 try { 
-			 shopService.update(id, s);
+			 shopService.update(id, shop);
 			 return new ResponseEntity<String>("SHOP MODIFIED",HttpStatus.OK);
 		 }catch(Exception e) {			 
 			 logger.error("ERROR: \n", e);
@@ -245,9 +245,9 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/deleteShopById/
-	 * this method delete one field by id_negozio
-	 * @param id
-	 * @return
+	 * This method delete one field by idShop
+	 * @param id : id of selected Shop
+	 * @return String
 	 */
 	@DeleteMapping(path = "/deleteShopById/{id}")
 	public ResponseEntity <String> deleteShopById(@PathVariable("id") Long id){
@@ -286,16 +286,16 @@ public class ControllerApiRest {
 	/**
 	 * localhost:8080/api/insertSupplier
 	 * This method insert a new Supplier
-	 * @param 
-	 * @return
+	 * @param supplier : Supplier Object
+	 * @return insertSupplier : return new supplier
 	 */
 	@PostMapping(path ="/insertSupplier", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Supplier> insertSupplier(@RequestBody Supplier s){
+	public ResponseEntity<Supplier> insertSupplier(@RequestBody Supplier supplier){
 		logger.info("INSERT NEW SUPPLIER");
 		try {
-			Supplier insSupplier = supplierService.insert(s);
+			Supplier insertSupplier = supplierService.insert(supplier);
 			logger.info("INSERT NEW SUPPLIER OK");
-			return new ResponseEntity<Supplier>(insSupplier,HttpStatus.CREATED);
+			return new ResponseEntity<Supplier>(insertSupplier,HttpStatus.CREATED);
 		}catch (Exception e) {
 			logger.error("ERROR: \n", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -305,16 +305,16 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/updateSupplierById/
-	 * this method update one field of Supplier by id_fornitore
-	 * @param id
-	 * @param art
-	 * @return
+	 * This method update one field of Supplier by idSupplier
+	 * @param id : id of Supplier Object
+	 * @param supplier : Supplier Object
+	 * @return String
 	 */
 	@PutMapping("/updateSupplierById/{id}")
-	public ResponseEntity <String> updateSupplierById(@PathVariable("id") Long id, @RequestBody Supplier s){
+	public ResponseEntity <String> updateSupplierById(@PathVariable("id") Long id, @RequestBody Supplier supplier){
 		logger.info("UPDATE SUPPLIER BY ID");
 		 try { 
-			 supplierService.update(id, s);
+			 supplierService.update(id, supplier);
 			 return new ResponseEntity<String>("SUPPLIER MODIFIED",HttpStatus.OK);
 		 }catch(Exception e) {			 
 			 logger.error("ERROR: \n", e);
@@ -324,9 +324,9 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/deleteSupplierById/
-	 * this method delete one field by id_fornitore
-	 * @param id
-	 * @return
+	 * This method delete one field by idSupplier
+	 * @param id : id of selected Supplier
+	 * @return String
 	 */
 	@DeleteMapping(path = "/deleteSupplierById/{id}")
 	public ResponseEntity <String> deleteSupplierById(@PathVariable("id") Long id){
@@ -366,16 +366,16 @@ public class ControllerApiRest {
 	/**
 	 * localhost:8080/api/insertTransaction
 	 * This method insert a new transaction
-	 * @param 
-	 * @return
+	 * @param transaction : Transaction Object
+	 * @return insertTransaction : return new transaction
 	 */
 	@PostMapping(path ="/insertTransaction", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Transaction> insertTransaction(@RequestBody Transaction t){
+	public ResponseEntity<Transaction> insertTransaction(@RequestBody Transaction transaction){
 		logger.info("INSERT NEW TRANSACTION");
 		try {
-			Transaction insTransaction = transactionService.insert(t);
+			Transaction insertTransaction = transactionService.insert(transaction);
 			logger.info("INSERT NEW TRANSACTION OK");
-			return new ResponseEntity<Transaction>(insTransaction,HttpStatus.CREATED);
+			return new ResponseEntity<Transaction>(insertTransaction,HttpStatus.CREATED);
 		}catch (Exception e) {
 			logger.error("ERROR: \n", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -385,16 +385,16 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/updateTransactionById/
-	 * this method update one field of Supplier by id_transazione
-	 * @param id
-	 * @param art
-	 * @return
+	 * This method update one field of Supplier by idTransaction
+	 * @param id : id of selected transaction
+	 * @param transaction : Transaction Object
+	 * @return String
 	 */
 	@PutMapping("/updateTransactionById/{id}")
-	public ResponseEntity <String> updateTransactionById(@PathVariable("id") Long id, @RequestBody Transaction t){
+	public ResponseEntity <String> updateTransactionById(@PathVariable("id") Long id, @RequestBody Transaction transaction){
 		logger.info("UPDATE TRANSACION BY ID");
 		 try { 
-			 transactionService.update(id, t);
+			 transactionService.update(id, transaction);
 			 return new ResponseEntity<String>("TRANSACTION MODIFIED",HttpStatus.OK);
 		 }catch(Exception e) {			 
 			 logger.error("ERROR: \n", e);
@@ -404,9 +404,9 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/deleteTransactionById/
-	 * this method delete one field by id_transazione
-	 * @param id
-	 * @return
+	 * This method delete one field by idTransaction
+	 * @param id : id of selected transaction
+	 * @return String
 	 */
 	@DeleteMapping(path = "/deleteTransactionById/{id}")
 	public ResponseEntity <String> deleteTransactionById(@PathVariable("id") Long id){
@@ -446,16 +446,16 @@ public class ControllerApiRest {
 	/**
 	 * localhost:8080/api/insertFidelityClient
 	 * This method insert a new fidelity client
-	 * @param 
-	 * @return
+	 * @param fidelityClient : FidelityClient Object
+	 * @return insertFidelityClient : return new fidelityClient
 	 */
 	@PostMapping(path ="/insertFidelityClient", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FidelityClient> insertFidelityClient(@RequestBody FidelityClient t){
+	public ResponseEntity<FidelityClient> insertFidelityClient(@RequestBody FidelityClient fidelityClient){
 		logger.info("INSERT NEW FIDELITY CLIENT");
 		try {
-			FidelityClient insFidelityClient = fidelityClientService.insert(t);
+			FidelityClient insertFidelityClient = fidelityClientService.insert(fidelityClient);
 			logger.info("INSERT NEW FIDELITY CLIENT OK");
-			return new ResponseEntity<FidelityClient>(insFidelityClient,HttpStatus.CREATED);
+			return new ResponseEntity<FidelityClient>(insertFidelityClient,HttpStatus.CREATED);
 		}catch (Exception e) {
 			logger.error("ERROR: \n", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -465,16 +465,16 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/updateFidelityClientById/
-	 * this method update one field of fidelityClient by id_cliente
-	 * @param id
-	 * @param art
-	 * @return
+	 * This method update one field of fidelityClient by idClient
+	 * @param id : id of selected field
+	 * @param fidelityClient : FidelityClient Object
+	 * @return String
 	 */
 	@PutMapping("/updateFidelityClientById/{id}")
-	public ResponseEntity <String> updateFidelityClientById(@PathVariable("id") Long id, @RequestBody FidelityClient t){
+	public ResponseEntity <String> updateFidelityClientById(@PathVariable("id") Long id, @RequestBody FidelityClient fidelityClient){
 		logger.info("UPDATE FIDELITY CLIENT BY ID");
 		 try { 
-			 fidelityClientService.update(id, t);
+			 fidelityClientService.update(id, fidelityClient);
 			 return new ResponseEntity<String>("FIDELITY CLIENT MODIFIED",HttpStatus.OK);
 		 }catch(Exception e) {			 
 			 logger.error("ERROR: \n", e);
@@ -484,9 +484,9 @@ public class ControllerApiRest {
 	
 	/**
 	 * localhost:8080/api/deleteFidelityClientById/
-	 * this method delete one field by id_cliente
-	 * @param id
-	 * @return
+	 * This method delete one field by idClient
+	 * @param id : id of selected client
+	 * @return String
 	 */
 	@DeleteMapping(path = "/deleteFidelityClientById/{id}")
 	public ResponseEntity <String> deleteFidelityClientById(@PathVariable("id") Long id){
@@ -500,18 +500,6 @@ public class ControllerApiRest {
 			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		  }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

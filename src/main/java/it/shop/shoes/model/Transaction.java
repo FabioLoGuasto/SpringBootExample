@@ -24,21 +24,34 @@ import lombok.NoArgsConstructor;
 public class Transaction {
 	
 	
+	/**
+	 * unique id of transaction
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id_transazione")
 	private Long idTransazione;
 	
+	/**
+	 * number client's card fidelity 
+	 * it may be in the receipt but it may also not be there
+	 */
 	@Column(nullable = true, name = "numero_tessera")
 	private String fidelityNumber;
 	
+	/**
+	 * id of the client of ther's fidelity card
+	 * there is relation with FidelityClient table
+	 */
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = FidelityClient.class, cascade = CascadeType.REFRESH)
 	@JoinColumn(nullable = true, name = "cliente_id")
-//	@JsonBackReference
 	private FidelityClient clientId;
 
+	/**
+	 * list Article On Transaction
+	 * ther's a relation with Article table
+	 */
 	@OneToMany(mappedBy = "transactionId", targetEntity = Article.class, fetch = FetchType.LAZY)
-//	@JsonManagedReference
 	private Set<Article> listArticleOnTransaction = new HashSet<>();	
 	
 

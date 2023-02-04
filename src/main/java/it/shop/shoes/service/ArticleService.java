@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.dto.ArticleDto;
-import it.shop.shoes.dto.ArticleDto2;
+import it.shop.shoes.dto.ArticleDtoExample;
 import it.shop.shoes.model.Article;
 
 @Service
@@ -21,6 +21,6 @@ public interface ArticleService {
 	public ArticleDto EntityToDto(Article art);
 	public Article dtoToEntity(ArticleDto dto);
 	public List<ArticleDto> getAllArticleDto(List<Article>art);
-	public List<ArticleDto2> getAllArticleDto2(List<Article>art);
-	public ArticleDto2 EntityToDto2(Article art);
+	public List<ArticleDtoExample> getAllArticleDto2(List<Article>art);
+	public ArticleDtoExample EntityToDto2(Article art);
 }

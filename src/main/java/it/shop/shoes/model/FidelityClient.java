@@ -20,22 +20,37 @@ import lombok.NoArgsConstructor;
 @Table(name="fidelity_client", schema="negozio_scarpe")
 public class FidelityClient {
 	
+	/**
+	 * unique id of client
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id_cliente")
 	private Long idCliente;
 	
+	/**
+	 * fiscal code of client
+	 */
 	@Column(nullable = true,name = "cf")
 	private String fiscalCodeClient;
 	
+	/**
+	 * locality where live the client
+	 */
 	@Column(nullable = true,name = "localita")
 	private String localityClient;
 	
+	/**
+	 * province where live the client
+	 */
 	@Column(nullable = true,name = "provincia")
 	private String provinceClient;
 
+	/**
+	 * list of transaction
+	 * there is a relation with transaction table
+	 */
 	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class, fetch = FetchType.LAZY)
-//	@JsonManagedReference
 	private Set<Transaction> listOfTransaction = new HashSet<>();
 	
 

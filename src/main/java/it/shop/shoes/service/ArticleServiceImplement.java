@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.dto.ArticleDto;
-import it.shop.shoes.dto.ArticleDto2;
+import it.shop.shoes.dto.ArticleDtoExample;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.repository.ArticleRepository;
 
@@ -30,7 +30,7 @@ public class ArticleServiceImplement implements ArticleService{
 	
 	
 	/**
-	 * method for get the lisf of field ArticleDto
+	 * method for get the list of field ArticleDto
 	 */
 	@Override
 	public List<ArticleDto> getAllArticleDto(List<Article>art){ // -------->>>>> ???????????????
@@ -41,11 +41,11 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 	
 	/**
-	 * method for get the lisf of field ArticleDto2
+	 * method for get the list of field ArticleDtoExample
 	 * return only code e brand of Article
 	 */
 	@Override
-	public List<ArticleDto2> getAllArticleDto2(List<Article>art){ // -------->>>>> ???????????????
+	public List<ArticleDtoExample> getAllArticleDto2(List<Article>art){ // -------->>>>> ???????????????
 		return articleRepository.findAll()
 				.stream()
 				.map(this::EntityToDto2)
@@ -54,7 +54,7 @@ public class ArticleServiceImplement implements ArticleService{
 
 	
 	/**
-	 * this method get a list of all articles from all shop
+	 * this method get a list of all articles from all shops
 	 */
 	@Override
 	public List<Article> getArticles() {
@@ -63,7 +63,7 @@ public class ArticleServiceImplement implements ArticleService{
 
 	
 	/**
-	 * this method update a selected field of article by id_articolo
+	 * this method update a selected field of article by idArticolo
 	 */
 	@Override
 	public void update(Long id, Article art) {
@@ -85,7 +85,7 @@ public class ArticleServiceImplement implements ArticleService{
 
 	
 	/**
-	 * this method delete an article by id_articolo
+	 * this method delete an article by idArticolo
 	 */
 	@Override
 	public void delete(Long id) {
@@ -94,7 +94,7 @@ public class ArticleServiceImplement implements ArticleService{
 	
 	
 	/**
-	 * this method convert fiel Article in field ArticleDto
+	 * this method convert field Article in field ArticleDto
 	 */
 	@Override
 	public ArticleDto EntityToDto(Article art) {
@@ -113,11 +113,11 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 	
 	/**
-	 * this method convert fiel Article in field ArticleDto
+	 * this method convert field Article in field ArticleDtoExample
 	 */
 	@Override
-	public ArticleDto2 EntityToDto2(Article art) {
-		ArticleDto2 dto = new ArticleDto2();
+	public ArticleDtoExample EntityToDto2(Article art) {
+		ArticleDtoExample dto = new ArticleDtoExample();
 		dto.setCode(art.getCode());
 		dto.setBrand(art.getBrand());
 		return dto;
@@ -125,7 +125,7 @@ public class ArticleServiceImplement implements ArticleService{
 	
 	
 	/**
-	 * this method convert fiel ArticleDto in field Article
+	 * this method convert field ArticleDto in field Article
 	 */
 	@Override
 	public Article dtoToEntity(ArticleDto dto) {

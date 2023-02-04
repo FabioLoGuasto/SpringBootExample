@@ -13,7 +13,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
+
 @Data // Getters/Setters/ToString
 @Entity
 @NoArgsConstructor
@@ -54,48 +54,88 @@ public class Article {
 		this.sellOut = sellOut;
 		this.supplierId = supplierId;
 	}
-
+	
+	/**
+	 * unique id of article
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id_articolo")
 	private Long idArticolo;
 	
+	  
+	/**
+	 *  code of article type
+	 */
 	@Column(nullable = true, name = "codice", length=10)
 	private String code;
 	
+	/**
+	 * size article
+	 */
 	@Column(name = "taglia")
 	private int size;
 	
+	/**
+	 * id of the shop
+	 * there is relation with shop table
+	 */
 	@OneToOne(fetch = FetchType.EAGER, targetEntity = Shop.class)
 	@JoinColumn(nullable = true,name = "negozio_id")
 	private Shop negozioId;
 	
+	/**
+	 * brand of article
+	 */
 	@Column(nullable = true,name = "brand")
 	private String brand;
 	
+	/**
+	 * category of article between w (woman) - m (man) - k (kids) - s (sport)
+	 */
 	@Column(nullable = true,name = "categoria")
 	private String category;
 	
+	/**
+	 * price of article
+	 */
 	@Column(nullable = true,name = "prezzo")
 	private double price;
 	
+	/**
+	 * discount of article
+	 */
 	@Column(nullable = true,name = "sconto")
 	private int discount;
 	
+	/**
+	 * season of article between SS23 (spring-summer 2023) and FW22 (fall-winter 2022)
+	 */
 	@Column(nullable = true,name = "stagione")
 	private String season;
 	
+	/**
+	 * sell out of article 
+	 * if 1, the article is in the shop
+	 * if 0, the article has been sold 
+	 */
 	@Column(columnDefinition = "default '1'",name = "venduto")
 	private Integer sellOut;
 	
+	/**
+	 * id of supplier
+	 * there is a relation with supplier table
+	 */
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Supplier.class, cascade = CascadeType.REFRESH)
 	@JoinColumn(nullable = true, name = "fornitore_id")
-//	@JsonBackReference
 	private Supplier supplierId;
 	
+	/**
+	 * id of transaction
+	 * there is a relation with transaction table
+	 */
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Transaction.class, cascade = CascadeType.REFRESH)
 	@JoinColumn(nullable = true,name = "transazione_id")
-//	@JsonBackReference
 	private Transaction transactionId;
 	
 
