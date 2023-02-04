@@ -1,22 +1,29 @@
 package it.shop.shoes.model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data // Getters/Setters/ToString
 @Entity
+@NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
 public class Article {
 	
-	public Article() {}
-	public Article(Long idArticle, String code, int size, int negozioId, String brand, String category, double price,
-			int discount, String season, int sellOut, int supplierId, int transactionId) {
-		this.idArticle = idArticle;
+
+	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
+			int discount, String season, int sellOut, Supplier supplierId, Transaction transactionId) {
+		this.idArticolo = idArticolo;
 		this.code = code;
 		this.size = size;
 		this.negozioId = negozioId;
@@ -30,43 +37,106 @@ public class Article {
 		this.transactionId = transactionId;
 	}
 	
+	/**
+	 * Constructor without transaction_id
+	 */
+	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
+			int discount, String season, int sellOut, Supplier supplierId) {
+		this.idArticolo = idArticolo;
+		this.code = code;
+		this.size = size;
+		this.negozioId = negozioId;
+		this.brand = brand;
+		this.category = category;
+		this.price = price;
+		this.discount = discount;
+		this.season = season;
+		this.sellOut = sellOut;
+		this.supplierId = supplierId;
+	}
 	
+	/**
+	 * unique id of article
+	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idArticle;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id_articolo")
+	private Long idArticolo;
 	
-	@Column(nullable = true, name = "code", length=10)
+	  
+	/**
+	 *  code of article type
+	 */
+	@Column(nullable = true, name = "codice", length=10)
 	private String code;
 	
-	@Column(name = "size")
+	/**
+	 * size article
+	 */
+	@Column(name = "taglia")
 	private int size;
 	
-	@Column(nullable = true,name = "negozio_id")
-	private int negozioId;
+	/**
+	 * id of the shop
+	 * there is relation with shop table
+	 */
+	@OneToOne(fetch = FetchType.EAGER, targetEntity = Shop.class)
+	@JoinColumn(nullable = true,name = "negozio_id")
+	private Shop negozioId;
 	
+	/**
+	 * brand of article
+	 */
 	@Column(nullable = true,name = "brand")
 	private String brand;
 	
-	@Column(nullable = true,name = "category")
+	/**
+	 * category of article between w (woman) - m (man) - k (kids) - s (sport)
+	 */
+	@Column(nullable = true,name = "categoria")
 	private String category;
 	
-	@Column(nullable = true,name = "price")
+	/**
+	 * price of article
+	 */
+	@Column(nullable = true,name = "prezzo")
 	private double price;
 	
-	@Column(nullable = true,name = "discount")
+	/**
+	 * discount of article
+	 */
+	@Column(nullable = true,name = "sconto")
 	private int discount;
 	
-	@Column(nullable = true,name = "season")
+	/**
+	 * season of article between SS23 (spring-summer 2023) and FW22 (fall-winter 2022)
+	 */
+	@Column(nullable = true,name = "stagione")
 	private String season;
 	
-	@Column(name = "sellOut")
-	private int sellOut;
+	/**
+	 * sell out of article 
+	 * if 1, the article is in the shop
+	 * if 0, the article has been sold 
+	 */
+	@Column(columnDefinition = "default '1'",name = "venduto")
+	private Integer sellOut;
 	
-	@Column(nullable = true,name = "supplier_id")
-	private int supplierId;
+	/**
+	 * id of supplier
+	 * there is a relation with supplier table
+	 */
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Supplier.class, cascade = CascadeType.REFRESH)
+	@JoinColumn(nullable = true, name = "fornitore_id")
+	private Supplier supplierId;
 	
-	@Column(nullable = true,name = "transaction_id")
-	private int transactionId;
+	/**
+	 * id of transaction
+	 * there is a relation with transaction table
+	 */
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Transaction.class, cascade = CascadeType.REFRESH)
+	@JoinColumn(nullable = true,name = "transazione_id")
+	private Transaction transactionId;
 	
-	
+
 }

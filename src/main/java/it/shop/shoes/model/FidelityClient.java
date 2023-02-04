@@ -1,36 +1,61 @@
 package it.shop.shoes.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name="fidelity_client", schema="negozio_scarpe")
 public class FidelityClient {
 	
+	/**
+	 * unique id of client
+	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idClient;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id_cliente")
+	private Long idCliente;
 	
+	/**
+	 * fiscal code of client
+	 */
 	@Column(nullable = true,name = "cf")
-	private int fiscalCodeClient;
+	private String fiscalCodeClient;
 	
+	/**
+	 * locality where live the client
+	 */
 	@Column(nullable = true,name = "localita")
-	private int localityClient;
+	private String localityClient;
 	
+	/**
+	 * province where live the client
+	 */
 	@Column(nullable = true,name = "provincia")
-	private int provinceClient;
+	private String provinceClient;
 
-	public FidelityClient() {}
+	/**
+	 * list of transaction
+	 * there is a relation with transaction table
+	 */
+	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class, fetch = FetchType.LAZY)
+	private Set<Transaction> listOfTransaction = new HashSet<>();
+	
 
-	public FidelityClient(Long idClient, int fiscalCodeClient, int localityClient, int provinceClient) {
-		this.idClient = idClient;
+	public FidelityClient(Long idCliente, String fiscalCodeClient, String localityClient, String provinceClient) {
+		this.idCliente = idCliente;
 		this.fiscalCodeClient = fiscalCodeClient;
 		this.localityClient = localityClient;
 		this.provinceClient = provinceClient;
