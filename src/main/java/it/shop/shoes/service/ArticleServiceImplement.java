@@ -10,8 +10,11 @@ import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.ArticleDtoExample;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.repository.ArticleRepository;
+import jakarta.transaction.Transactional;
+
 
 @Service
+@Transactional
 public class ArticleServiceImplement implements ArticleService{
 
 	@Autowired
@@ -21,7 +24,6 @@ public class ArticleServiceImplement implements ArticleService{
 	 * method for insert new Article.
 	 * Now the field transaction_id is deselected. During the insert there will be null into the database
 	 */
-	@Override
 	public Article insert(Article a) {
 //		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId(), a.getTransactionId()); // completo
 		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId()); 
@@ -32,7 +34,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * method for get the list of field ArticleDto
 	 */
-	@Override
 	public List<ArticleDto> getAllArticleDto(List<Article>art){ // -------->>>>> ???????????????
 		return articleRepository.findAll()
 				.stream()
@@ -44,7 +45,6 @@ public class ArticleServiceImplement implements ArticleService{
 	 * method for get the list of field ArticleDtoExample
 	 * return only code e brand of Article
 	 */
-	@Override
 	public List<ArticleDtoExample> getAllArticleDto2(List<Article>art){ // -------->>>>> ???????????????
 		return articleRepository.findAll()
 				.stream()
@@ -56,7 +56,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method get a list of all articles from all shops
 	 */
-	@Override
 	public List<Article> getArticles() {
 		return articleRepository.findAll();
 	}
@@ -65,7 +64,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method update a selected field of article by idArticolo
 	 */
-	@Override
 	public void update(Long id, Article art) {
 		art.setIdArticolo(id);
 		articleRepository.save(art);
@@ -75,7 +73,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * DA FARE ---------------------------------------------------------------------------------------------------------------
 	 */
-	@Override
 	public void updateFromCode(Long id, Article a) {
 		// TODO Auto-generated method stub
 		// VORREI MODIFICARLI X CODICE, IN MODO DA MODIFICARLI TUTTI INSIEME
@@ -87,7 +84,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method delete an article by idArticolo
 	 */
-	@Override
 	public void delete(Long id) {
 		articleRepository.deleteById(id);		
 	}
@@ -96,7 +92,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method convert field Article in field ArticleDto
 	 */
-	@Override
 	public ArticleDto EntityToDto(Article art) {
 		ArticleDto dto = new ArticleDto();
 		dto.setCode(art.getCode());
@@ -115,7 +110,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method convert field Article in field ArticleDtoExample
 	 */
-	@Override
 	public ArticleDtoExample EntityToDto2(Article art) {
 		ArticleDtoExample dto = new ArticleDtoExample();
 		dto.setCode(art.getCode());
@@ -127,7 +121,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method convert field ArticleDto in field Article
 	 */
-	@Override
 	public Article dtoToEntity(ArticleDto dto) {
 		Article art = new Article();
 		art.setCode(dto.getCode());
@@ -142,4 +135,14 @@ public class ArticleServiceImplement implements ArticleService{
 		art.setSupplierId(dto.getSupplierId());
 		return art;
 	}
+
+
+	
+	public List<Article> ricerca(int i, String s) {
+		return articleRepository.ricerca(i, s);
+	}
+	
+	
+	
+	
 }

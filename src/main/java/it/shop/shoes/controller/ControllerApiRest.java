@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.shop.shoes.dto.ArticleDto;
@@ -46,6 +47,32 @@ public class ControllerApiRest {
 	@Autowired TransactionService transactionService;
 	@Autowired FidelityClientService fidelityClientService;
 // ---------------------------------------------------------------------------------- ARTICLE	
+	
+	/**
+	 * localhost:8080/api/ricerca?primoParametro=3&secondoParametro=A011
+	 * @param i
+	 * @param s
+	 * @return
+	 */
+	@GetMapping(path = "/ricerca", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<Article>> ricerca (@RequestParam(value = "primoParametro") int i, @RequestParam(value = "secondoParametro") String s){
+		logger.info("RICERCA DTO");
+		try {
+			List<Article> list = articleService.ricerca(i, s);
+			return new ResponseEntity<List<Article>>(list, HttpStatus.OK);
+		}catch(Exception e) {
+			logger.error("ERROR: \n", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * localhost:8080/api/getAllArticles
 	 * This method return a list with all articles from all shops
@@ -133,7 +160,7 @@ public class ControllerApiRest {
 	 * @return listArticlesDto 
 	 */
 	@GetMapping(path ="/getAllArticlesDto2", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<ArticleDtoExample>> getAllArticlesDto2(){
+	public ResponseEntity <List<ArticleDtoExample>> getAllArticlesDtoExample(){
 		logger.info("GET ALL ARTICLES WITH DTO2");
 		try {
 			List<Article> listArticles = this.articleService.getArticles();

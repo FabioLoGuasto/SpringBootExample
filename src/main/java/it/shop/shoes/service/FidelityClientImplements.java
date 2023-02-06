@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import it.shop.shoes.model.FidelityClient;
 import it.shop.shoes.repository.FidelityClientRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class FidelityClientImplements implements FidelityClientService{
 
 	@Autowired private FidelityClientRepository fidelityClientRepository;

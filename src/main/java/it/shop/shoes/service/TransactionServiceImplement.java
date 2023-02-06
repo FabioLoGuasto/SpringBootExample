@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import it.shop.shoes.model.Transaction;
 import it.shop.shoes.repository.TransactionRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class TransactionServiceImplement implements TransactionService{
 
 	@Autowired

@@ -2,11 +2,13 @@ package it.shop.shoes.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.ArticleDtoExample;
 import it.shop.shoes.model.Article;
+
 
 @Service
 public interface ArticleService {
@@ -23,4 +25,6 @@ public interface ArticleService {
 	public List<ArticleDto> getAllArticleDto(List<Article>art);
 	public List<ArticleDtoExample> getAllArticleDto2(List<Article>art);
 	public ArticleDtoExample EntityToDto2(Article art);
+	
+	List <Article> ricerca (@Param("primoParametro") int i, @Param("secondoParametro") String s);
 }

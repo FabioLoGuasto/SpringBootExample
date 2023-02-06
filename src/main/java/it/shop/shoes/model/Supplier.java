@@ -3,7 +3,9 @@ package it.shop.shoes.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="supplier", schema="negozio_scarpe")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Supplier {
 	
 	/**
@@ -58,7 +61,7 @@ public class Supplier {
 	/**
 	 * supplier's list of items
 	 */
-	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class , fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE})
 	private Set <Article> listArticlesOfSupplied = new HashSet<>(); // set non ha duplicati
 
 	

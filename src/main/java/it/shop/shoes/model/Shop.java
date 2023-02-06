@@ -1,4 +1,6 @@
 package it.shop.shoes.model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data // Getters/Setters/ToString
 @Entity
 @Table(name="shop", schema="negozio_scarpe")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Shop {
 	
 	/**

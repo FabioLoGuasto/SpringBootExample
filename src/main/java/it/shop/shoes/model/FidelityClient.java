@@ -3,6 +3,9 @@ package it.shop.shoes.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="fidelity_client", schema="negozio_scarpe")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class FidelityClient {
 	
 	/**
@@ -50,7 +54,7 @@ public class FidelityClient {
 	 * list of transaction
 	 * there is a relation with transaction table
 	 */
-	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE})
 	private Set<Transaction> listOfTransaction = new HashSet<>();
 	
 
