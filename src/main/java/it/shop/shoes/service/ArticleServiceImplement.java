@@ -89,15 +89,15 @@ public class ArticleServiceImplement implements ArticleService{
 	 * this method convert field Article in field ArticleDtoExample
 	 */
 	public List<ArticleDtoExample> questCodeAndBrand(List<Article> listaArticolo) {
-	List <ArticleDtoExample> listaDtoExample = new ArrayList<>();
-	for (Article a : listaArticolo) {
-		ArticleDtoExample dto = new ArticleDtoExample();
-		dto.setCode(a.getCode());
-		dto.setBrand(a.getBrand());
-		listaDtoExample.add(dto);
+		List <ArticleDtoExample> listaDtoExample = new ArrayList<>();
+		for (Article a : listaArticolo) {
+			ArticleDtoExample dto = new ArticleDtoExample();
+			dto.setCode(a.getCode());
+			dto.setBrand(a.getBrand());
+			listaDtoExample.add(dto);
+		}
+		return listaDtoExample;
 	}
-	return listaDtoExample;
-  }
 	
 	/**
 	 * this method convert field ArticleDto in field Article
@@ -121,8 +121,8 @@ public class ArticleServiceImplement implements ArticleService{
 	 * this method return a list with the selected field query
 	 */
 	@Override
-	public List<Article> queryRicerca(int negozioId, String codice) {
-		return articleRepository.ricerca(negozioId, codice);
+	public List<Article> ricerca(int negozioId, String codice) {
+		return articleRepository.queryRicerca(negozioId, codice);
 	}
 
 	/**
@@ -140,5 +140,31 @@ public class ArticleServiceImplement implements ArticleService{
 		}
 		return listaDto;
 	}
+
+
+	/**
+	 * This method insert a new transaction and update the sellOut of selected idArticolo.
+	 * This is a possibiliy example of sull of one article
+	 */
+	@Override
+	public void updateSellOutArticle(Long transazione_id, int venduto, Long id_articolo) {
+		articleRepository.queryUpdateSellOutArticle(transazione_id, venduto, id_articolo);
+	}
+
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<Article> researchForBrand(String brand) {
+		return articleRepository.queryForBrand(brand);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

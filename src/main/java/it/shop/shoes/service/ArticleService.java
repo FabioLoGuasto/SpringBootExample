@@ -69,7 +69,7 @@ public interface ArticleService {
 	 * @param codice : code selected
 	 * @return list of article with negozioId and code selected
 	 */
-	public List <Article> queryRicerca (@Param("primoParametro") int negozioId, @Param("secondoParametro") String codice);
+	public List <Article> ricerca (@Param("primoParametro") int negozioId, @Param("secondoParametro") String codice);
 	
 	/**
 	 * this method return a list with the selected field from RicercaDto
@@ -78,7 +78,21 @@ public interface ArticleService {
 	 */
 	public List<RicercaDto> ricercaDto(List<Article> listArticle);
 	
+	/**
+	 * This method insert a new transaction and update the sellOut of selected idArticolo.
+	 * This is a possibiliy example of sull of one article
+	 * @param firstParam : transaction made
+	 * @param secondParam : this value will be 0 because sold
+	 * @param thirdParam : idArticolo that will be purchased
+	 */
+	public void updateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
 	
 	
 	
+	/**
+	 * 
+	 * @param brand
+	 * @return
+	 */
+	List <Article> researchForBrand (@Param("primoParametro") String brand);
 }

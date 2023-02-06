@@ -2,6 +2,7 @@ package it.shop.shoes.controller;
 
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,25 @@ public class ControllerApiRest {
 // ---------------------------------------------------------------------------------- ARTICLE	
 	
 	/**
+	 * localhost:8080/api/researchForBrand?primoParametro=ADIDAS
+	 * This method return a list with all articles from one selected brand
+	 * @param brand : chosen brand
+	 * @return listArticles
+	 */
+	@GetMapping(path ="/researchForBrand", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<Article>> researchForBrand(@RequestParam(value = "primoParametro") String brand){
+		logger.info("GET ALL ARTICLES WITH SELECTED BRAND");
+		try {
+			List<Article> listArticles = articleService.researchForBrand(brand);
+			return new ResponseEntity <List<Article>> (listArticles,HttpStatus.OK);
+		}catch(Exception e) {
+			logger.error("ERROR " + e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	
+	/**
 	 * localhost:8080/api/ricercaDto?primoParametro=2&secondoParametro=A008
 	 * @param negozioId : chosen field negozioId 
 	 * @param codice : chosen field codice
@@ -60,7 +80,7 @@ public class ControllerApiRest {
 	public ResponseEntity <List<RicercaDto>> ricercaDto (@RequestParam(value = "primoParametro") int negozioId, @RequestParam(value = "secondoParametro") String codice){
 		logger.info("RICERCA DTO");
 		try {
-			List<Article> listArticle = articleService.queryRicerca(negozioId, codice);
+			List<Article> listArticle = articleService.ricerca(negozioId, codice);
 			List<RicercaDto> listDto = articleService.ricercaDto(listArticle);
 			return new ResponseEntity<List<RicercaDto>>(listDto, HttpStatus.OK);
 		}catch(Exception e) {
@@ -483,6 +503,51 @@ public class ControllerApiRest {
 			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		  }
 	}
+	
+// ----------------------------------------------------------------------------------------------- METODI VARI
+	
+	
+	
+	/**
+	 * localhost:8080/api/insertTransazioneUpdatevenduto
+	 * This method insert a new transaction and update the sellOut of selected idArticolo.
+	 * This is a possibiliy example of sull of one article
+	 * @param transaction : Transaction Object
+	 * @return : new trasaction and update field sellOut of Article of selected idArticle
+	 */
+	@PostMapping(path = "/insertTransazioneUpdatevenduto", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <Transaction> insertTransazioneUpdatevenduto(@RequestBody Transaction transaction){
+		Long idTransaction = (long) 0;
+		Transaction insertTransaction;
+		Scanner s = new Scanner(System.in);
+		
+		try {
+			insertTransaction = transactionService.insert(transaction);
+			idTransaction = insertTransaction.getIdTransazione();
+			logger.info("INSERT A NEW TRANSACTION OK !!");
+		}catch(Exception e) {
+			  logger.error("ERROR: \n", e);
+			  s.close();
+			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		try {
+			logger.info("UPDATE SELL OUT ARTICLE");
+			System.out.println("INSERISCI L'ID DELL'ARTICOLO VENDUTO");
+			Long idArticolo = s.nextLong();
+			articleService.updateSellOutArticle(idTransaction, 0, idArticolo);
+			logger.info("ARTICOLO VENDUTO, TRANSAZIONE TERMINATA !!");
+			s.close();
+			return new ResponseEntity <Transaction>(insertTransaction,HttpStatus.OK);
+		}catch(Exception e) {
+			  logger.error("ERROR: \n", e);
+			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		
+	}
+	
+	
 	
 	
 	
