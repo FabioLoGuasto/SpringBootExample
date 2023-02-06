@@ -7,5 +7,4 @@ public class ArticleDtoExample {
 	
 	private String code;
 	private String brand;
-
 }

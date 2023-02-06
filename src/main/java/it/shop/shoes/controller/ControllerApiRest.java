@@ -1,5 +1,6 @@
 package it.shop.shoes.controller;
 
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.ArticleDtoExample;
+import it.shop.shoes.dto.RicercaDto;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.model.FidelityClient;
 import it.shop.shoes.model.Shop;
@@ -49,29 +51,23 @@ public class ControllerApiRest {
 // ---------------------------------------------------------------------------------- ARTICLE	
 	
 	/**
-	 * localhost:8080/api/ricerca?primoParametro=3&secondoParametro=A011
-	 * @param i
-	 * @param s
-	 * @return
+	 * localhost:8080/api/ricercaDto?primoParametro=2&secondoParametro=A008
+	 * @param negozioId : chosen field negozioId 
+	 * @param codice : chosen field codice
+	 * @return listDto :this method return a list with the selected field from RicercaDto
 	 */
-	@GetMapping(path = "/ricerca", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<Article>> ricerca (@RequestParam(value = "primoParametro") int i, @RequestParam(value = "secondoParametro") String s){
+	@GetMapping(path = "/ricercaDto", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<RicercaDto>> ricercaDto (@RequestParam(value = "primoParametro") int negozioId, @RequestParam(value = "secondoParametro") String codice){
 		logger.info("RICERCA DTO");
 		try {
-			List<Article> list = articleService.ricerca(i, s);
-			return new ResponseEntity<List<Article>>(list, HttpStatus.OK);
+			List<Article> listArticle = articleService.queryRicerca(negozioId, codice);
+			List<RicercaDto> listDto = articleService.ricercaDto(listArticle);
+			return new ResponseEntity<List<RicercaDto>>(listDto, HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR: \n", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * localhost:8080/api/getAllArticles
@@ -88,29 +84,7 @@ public class ControllerApiRest {
 			logger.error("ERROR " + e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-	}
-	
-	
-	/**
-	 * localhost:8080/api/insertArticle
-	 * This is the method for insert new Article.
-	 * Excludes the transaction id field because by default it must be null
-	 * @param art : object Article
-	 * @return insArticle : return new Article
-	 */
-	@PostMapping(path ="/insertArticle", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Article> insertArticle(@RequestBody Article art){
-		logger.info("INSERT ARTICLE");
-		try {
-			Article insArticle = articleService.insert(art);
-			logger.info("INSERT OK");
-			return new ResponseEntity<Article>(insArticle,HttpStatus.CREATED);
-		}catch (Exception e) {
-			logger.error("ERROR: \n", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}  
-	}
-	
+	}	
 	
 	/**
 	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
@@ -134,37 +108,19 @@ public class ControllerApiRest {
 		}  
 	}
 
+
 	/**
 	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
-	 * localhost:8080/api/getAllArticlesDto
-	 * This method return a list ArticleDto (transaction_id excluse) with all articles from all shops
-	 * @return listArticles
-	 */
-	@GetMapping(path ="/getAllArticlesDto", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<ArticleDto>> getAllArticlesDto(){
-		logger.info("GET ALL ARTICLES WITH DTO");
-		try {
-			List<Article> listArticles = this.articleService.getArticles();
-			List<ArticleDto> listArticlesDto = articleService.getAllArticleDto(listArticles);
-			return new ResponseEntity <List<ArticleDto>> (listArticlesDto,HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("ERROR " + e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-	
-	/**
-	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
-	 * localhost:8080/api/getAllArticlesDto2
+	 * localhost:8080/api/getAllArticlesDtoExample
 	 * This method return a list ArticleDtoExample (only code & brand of Article)
 	 * @return listArticlesDto 
 	 */
-	@GetMapping(path ="/getAllArticlesDto2", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path ="/getAllArticlesDtoExample", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <List<ArticleDtoExample>> getAllArticlesDtoExample(){
-		logger.info("GET ALL ARTICLES WITH DTO2");
+		logger.info("GET ALL ARTICLES WITH DTOEXAMPLE");
 		try {
 			List<Article> listArticles = this.articleService.getArticles();
-			List<ArticleDtoExample> listArticlesDto = articleService.getAllArticleDto2(listArticles);
+			List<ArticleDtoExample> listArticlesDto = articleService.questCodeAndBrand(listArticles);
 			return new ResponseEntity <List<ArticleDtoExample>> (listArticlesDto,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR " + e);
@@ -211,7 +167,7 @@ public class ControllerApiRest {
 	}
 	
 	
-//------------------------------------------------------------------------------ SHOP	
+//----------------------------------------------------------------------------------------------------------------------------- SHOP	
 	
 	/**
 	 * localhost:8080/api/getAllShop

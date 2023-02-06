@@ -1,5 +1,6 @@
 package it.shop.shoes.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.ArticleDtoExample;
+import it.shop.shoes.dto.RicercaDto;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.repository.ArticleRepository;
 import jakarta.transaction.Transactional;
@@ -25,33 +27,20 @@ public class ArticleServiceImplement implements ArticleService{
 	 * Now the field transaction_id is deselected. During the insert there will be null into the database
 	 */
 	public Article insert(Article a) {
-//		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId(), a.getTransactionId()); // completo
 		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId()); 
 		return articleRepository.save(art);
 	}
 	
 	
-	/**
-	 * method for get the list of field ArticleDto
-	 */
-	public List<ArticleDto> getAllArticleDto(List<Article>art){ // -------->>>>> ???????????????
-		return articleRepository.findAll()
-				.stream()
-				.map(this::EntityToDto)
-				.collect(Collectors.toList());
-	}
-	
-	/**
-	 * method for get the list of field ArticleDtoExample
-	 * return only code e brand of Article
-	 */
-	public List<ArticleDtoExample> getAllArticleDto2(List<Article>art){ // -------->>>>> ???????????????
-		return articleRepository.findAll()
-				.stream()
-				.map(this::EntityToDto2)
-				.collect(Collectors.toList());
-	}
-
+//	/**
+//	 * method for get the list of field ArticleDto
+//	 */
+//	public List<ArticleDto> getAllArticleDto(List<Article>art){ // -------->>>>> ???????????????
+//		return articleRepository.findAll()
+//				.stream()
+//				.map(this::EntityToDto)
+//				.collect(Collectors.toList());
+//	}
 	
 	/**
 	 * this method get a list of all articles from all shops
@@ -67,17 +56,6 @@ public class ArticleServiceImplement implements ArticleService{
 	public void update(Long id, Article art) {
 		art.setIdArticolo(id);
 		articleRepository.save(art);
-	}
-	
-	
-	/**
-	 * DA FARE ---------------------------------------------------------------------------------------------------------------
-	 */
-	public void updateFromCode(Long id, Article a) {
-		// TODO Auto-generated method stub
-		// VORREI MODIFICARLI X CODICE, IN MODO DA MODIFICARLI TUTTI INSIEME
-		// POTREI FARE UNA SELECT PER CODICE
-		// POI TRAMITE ITERAZIONE POTREI MODIFICARLI UNO PER UNO DANDO UN INPUT UGUALE PER TUTTI
 	}
 
 	
@@ -110,13 +88,16 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method convert field Article in field ArticleDtoExample
 	 */
-	public ArticleDtoExample EntityToDto2(Article art) {
+	public List<ArticleDtoExample> questCodeAndBrand(List<Article> listaArticolo) {
+	List <ArticleDtoExample> listaDtoExample = new ArrayList<>();
+	for (Article a : listaArticolo) {
 		ArticleDtoExample dto = new ArticleDtoExample();
-		dto.setCode(art.getCode());
-		dto.setBrand(art.getBrand());
-		return dto;
+		dto.setCode(a.getCode());
+		dto.setBrand(a.getBrand());
+		listaDtoExample.add(dto);
 	}
-	
+	return listaDtoExample;
+  }
 	
 	/**
 	 * this method convert field ArticleDto in field Article
@@ -136,13 +117,28 @@ public class ArticleServiceImplement implements ArticleService{
 		return art;
 	}
 
-
-	
-	public List<Article> ricerca(int i, String s) {
-		return articleRepository.ricerca(i, s);
+	/**
+	 * this method return a list with the selected field query
+	 */
+	@Override
+	public List<Article> queryRicerca(int negozioId, String codice) {
+		return articleRepository.ricerca(negozioId, codice);
 	}
-	
-	
-	
+
+	/**
+	 * this method return a list with the selected field from RicercaDto
+	 */
+	@Override
+	public List<RicercaDto> ricercaDto(List<Article> listaArticolo) {
+		List <RicercaDto> listaDto = new ArrayList<>();
+		for (Article a : listaArticolo) {
+			RicercaDto dto = new RicercaDto();
+			dto.setCode(a.getCode());
+			dto.setNumberShop(a.getNegozioId().getShopNumber());
+			dto.setSize(a.getSize());
+			listaDto.add(dto);
+		}
+		return listaDto;
+	}
 	
 }

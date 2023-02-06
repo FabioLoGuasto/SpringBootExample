@@ -15,14 +15,8 @@ import it.shop.shoes.model.Article;
 public interface ArticleRepository extends JpaRepository<Article,Long>{
 	
 	//QUERY
-//	@Query(value = "SELECT	a.codice,a.taglia, s.numero_negozio FROM article a, shop s WHERE s.id_univoco_negozio = a.negozio_id AND a.negozio_id = 3 AND a.codice LIKE 'A011'", nativeQuery = true)
-//	List<Article> mmmmricerca = new ArrayList<>();
-
-	
-	//query
-	
 	@Query(value = "SELECT * FROM article WHERE negozio_id =:primoParametro AND codice =:secondoParametro ", nativeQuery = true)
-	List <Article> ricerca (@Param("primoParametro") int i, @Param("secondoParametro") String s);
+	List <Article> ricerca (@Param("primoParametro") int negozio_id, @Param("secondoParametro") String codice);
 	
 	
 }
