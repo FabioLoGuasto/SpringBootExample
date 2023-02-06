@@ -87,12 +87,10 @@ public interface ArticleService {
 	 */
 	public void updateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
 	
-	
-	
 	/**
-	 * 
-	 * @param brand
-	 * @return
+	 * This method return a list with all articles from one selected brand
+	 * @param brand : field selected
+	 * @return list of articles for brand
 	 */
-	List <Article> researchForBrand (@Param("primoParametro") String brand);
+	public List <Article> researchForBrand (@Param("primoParametro") String brand);
 }

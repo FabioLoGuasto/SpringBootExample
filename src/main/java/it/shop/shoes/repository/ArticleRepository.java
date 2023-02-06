@@ -17,7 +17,7 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
 	
 	@Transactional
 	@Query(value = "SELECT * FROM article WHERE negozio_id =:primoParametro AND codice =:secondoParametro ", nativeQuery = true)
-	List <Article> queryRicerca (@Param("primoParametro") int negozio_id, @Param("secondoParametro") String codice);
+	public List <Article> queryRicerca (@Param("primoParametro") int negozio_id, @Param("secondoParametro") String codice);
 	
 	@Transactional
 	@Modifying
@@ -33,6 +33,6 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
 	 */
 	@Transactional
 	@Query(value = "SELECT * FROM article WHERE brand LIKE %:primoParametro%", nativeQuery = true)
-	List <Article> queryForBrand (@Param("primoParametro") String brand);
+	public List <Article> queryForBrand (@Param("primoParametro") String brand);
 	
 }
