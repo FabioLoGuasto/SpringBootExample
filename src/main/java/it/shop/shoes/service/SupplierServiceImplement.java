@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import it.shop.shoes.model.Supplier;
 import it.shop.shoes.repository.SupplierRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class SupplierServiceImplement implements SupplierService{
 
 	@Autowired

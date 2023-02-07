@@ -1,71 +1,45 @@
 package it.shop.shoes.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.ArticleDtoExample;
+import it.shop.shoes.dto.RicercaDto;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.repository.ArticleRepository;
+import jakarta.transaction.Transactional;
+
+
 
 @Service
+@Transactional
 public class ArticleServiceImplement implements ArticleService{
-
-	@Autowired
-	private ArticleRepository articleRepository;
-
+	
+	@Autowired private ArticleRepository articleRepository;
+	
 	/**
 	 * method for insert new Article.
 	 * Now the field transaction_id is deselected. During the insert there will be null into the database
 	 */
-	@Override
 	public Article insert(Article a) {
-//		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId(), a.getTransactionId()); // completo
 		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId()); 
 		return articleRepository.save(art);
 	}
 	
 	
 	/**
-	 * method for get the list of field ArticleDto
-	 */
-	@Override
-	public List<ArticleDto> getAllArticleDto(List<Article>art){ // -------->>>>> ???????????????
-		return articleRepository.findAll()
-				.stream()
-				.map(this::EntityToDto)
-				.collect(Collectors.toList());
-	}
-	
-	/**
-	 * method for get the list of field ArticleDtoExample
-	 * return only code e brand of Article
-	 */
-	@Override
-	public List<ArticleDtoExample> getAllArticleDto2(List<Article>art){ // -------->>>>> ???????????????
-		return articleRepository.findAll()
-				.stream()
-				.map(this::EntityToDto2)
-				.collect(Collectors.toList());
-	}
-
-	
-	/**
 	 * this method get a list of all articles from all shops
 	 */
-	@Override
 	public List<Article> getArticles() {
 		return articleRepository.findAll();
 	}
-
+	
 	
 	/**
 	 * this method update a selected field of article by idArticolo
 	 */
-	@Override
 	public void update(Long id, Article art) {
 		art.setIdArticolo(id);
 		articleRepository.save(art);
@@ -73,21 +47,8 @@ public class ArticleServiceImplement implements ArticleService{
 	
 	
 	/**
-	 * DA FARE ---------------------------------------------------------------------------------------------------------------
-	 */
-	@Override
-	public void updateFromCode(Long id, Article a) {
-		// TODO Auto-generated method stub
-		// VORREI MODIFICARLI X CODICE, IN MODO DA MODIFICARLI TUTTI INSIEME
-		// POTREI FARE UNA SELECT PER CODICE
-		// POI TRAMITE ITERAZIONE POTREI MODIFICARLI UNO PER UNO DANDO UN INPUT UGUALE PER TUTTI
-	}
-
-	
-	/**
 	 * this method delete an article by idArticolo
 	 */
-	@Override
 	public void delete(Long id) {
 		articleRepository.deleteById(id);		
 	}
@@ -96,7 +57,6 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method convert field Article in field ArticleDto
 	 */
-	@Override
 	public ArticleDto EntityToDto(Article art) {
 		ArticleDto dto = new ArticleDto();
 		dto.setCode(art.getCode());
@@ -115,19 +75,20 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method convert field Article in field ArticleDtoExample
 	 */
-	@Override
-	public ArticleDtoExample EntityToDto2(Article art) {
-		ArticleDtoExample dto = new ArticleDtoExample();
-		dto.setCode(art.getCode());
-		dto.setBrand(art.getBrand());
-		return dto;
+	public List<ArticleDtoExample> questCodeAndBrand(List<Article> listaArticolo) {
+		List <ArticleDtoExample> listaDtoExample = new ArrayList<>();
+		for (Article a : listaArticolo) {
+			ArticleDtoExample dto = new ArticleDtoExample();
+			dto.setCode(a.getCode());
+			dto.setBrand(a.getBrand());
+			listaDtoExample.add(dto);
+		}
+		return listaDtoExample;
 	}
-	
-	
+
 	/**
 	 * this method convert field ArticleDto in field Article
 	 */
-	@Override
 	public Article dtoToEntity(ArticleDto dto) {
 		Article art = new Article();
 		art.setCode(dto.getCode());
@@ -142,4 +103,49 @@ public class ArticleServiceImplement implements ArticleService{
 		art.setSupplierId(dto.getSupplierId());
 		return art;
 	}
+	
+	/**
+	 * this method return a list with the selected field query
+	 */
+	@Override
+	public List<Article> ricerca(int negozioId, String codice) {
+		return articleRepository.queryRicerca(negozioId, codice);
+	}
+
+	/**
+	 * this method return a list with the selected field from RicercaDto
+	 */
+	@Override
+	public List<RicercaDto> ricercaDto(List<Article> listaArticolo) {
+		List <RicercaDto> listaDto = new ArrayList<>();
+		for (Article a : listaArticolo) {
+			RicercaDto dto = new RicercaDto();
+			dto.setCode(a.getCode());
+			dto.setNumberShop(a.getNegozioId().getShopNumber());
+			dto.setSize(a.getSize());
+			listaDto.add(dto);
+		}
+		return listaDto;
+	}
+
+
+	/**
+	 * This method insert a new transaction and update the sellOut of selected idArticolo.
+	 * This is a possibility example of sell of one article
+	 */
+	@Override
+	public void updateSellOutArticle(Long transazione_id, int venduto, Long id_articolo) {
+		articleRepository.queryUpdateSellOutArticle(transazione_id, venduto, id_articolo);
+	}
+
+
+	/**
+	 * This method return a list with all articles from one selected brand
+	 */
+	@Override
+	public List<Article> researchForBrand(String brand) {
+		return articleRepository.queryForBrand(brand);
+	}
+
+
 }

@@ -1,6 +1,7 @@
 package it.shop.shoes.model;
 
-import jakarta.persistence.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Article {
 	
 
@@ -80,7 +82,7 @@ public class Article {
 	 * id of the shop
 	 * there is relation with shop table
 	 */
-	@OneToOne(fetch = FetchType.EAGER, targetEntity = Shop.class)
+	@OneToOne(fetch = FetchType.LAZY, targetEntity = Shop.class) 
 	@JoinColumn(nullable = true,name = "negozio_id")
 	private Shop negozioId;
 	
@@ -126,7 +128,7 @@ public class Article {
 	 * id of supplier
 	 * there is a relation with supplier table
 	 */
-	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Supplier.class, cascade = CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Supplier.class)
 	@JoinColumn(nullable = true, name = "fornitore_id")
 	private Supplier supplierId;
 	
@@ -134,7 +136,7 @@ public class Article {
 	 * id of transaction
 	 * there is a relation with transaction table
 	 */
-	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Transaction.class, cascade = CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Transaction.class)
 	@JoinColumn(nullable = true,name = "transazione_id")
 	private Transaction transactionId;
 	
