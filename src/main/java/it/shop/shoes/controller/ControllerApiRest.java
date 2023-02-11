@@ -189,22 +189,22 @@ public class ControllerApiRest {
 	
 //----------------------------------------------------------------------------------------------------------------------------- SHOP	
 	
-	/**
-	 * localhost:8080/api/getAllShop
-	 * This method return a list with all shops
-	 * @return listShop
-	 */
-	@GetMapping(path ="/getAllShop", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<Shop>> getAllShop(){
-		logger.info("GET ALL SHOPS");
-		try {
-			List<Shop> listShop = shopService.getShops();
-			return new ResponseEntity <List<Shop>> (listShop,HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("ERROR " + e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+//	/**
+//	 * localhost:8080/api/getAllShop
+//	 * This method return a list with all shops
+//	 * @return listShop
+//	 */
+//	@GetMapping(path ="/getAllShop", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity <List<Shop>> getAllShop(){
+//		logger.info("GET ALL SHOPS");
+//		try {
+//			List<Shop> listShop = shopService.getShops();
+//			return new ResponseEntity <List<Shop>> (listShop,HttpStatus.OK);
+//		}catch(Exception e) {
+//			logger.error("ERROR " + e);
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//	}
 	
 	
 	/**
@@ -268,22 +268,22 @@ public class ControllerApiRest {
 	
 // ------------------------------------------------------------------------------------ SUPPLIER
 	
-	/**
-	 * localhost:8080/api/getAllSuppliers
-	 * This method return a list with all suppliers
-	 * @return listSuppliers
-	 */
-	@GetMapping(path ="/getAllSuppliers", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<Supplier>> getAllSuppliers(){
-		logger.info("GET ALL SUPPLIER");
-		try {
-			List<Supplier> listSuppliers = supplierService.getSuppliers();
-			return new ResponseEntity <List<Supplier>> (listSuppliers,HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("ERROR " + e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+//	/**
+//	 * localhost:8080/api/getAllSuppliers
+//	 * This method return a list with all suppliers
+//	 * @return listSuppliers
+//	 */
+//	@GetMapping(path ="/getAllSuppliers", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity <List<Supplier>> getAllSuppliers(){
+//		logger.info("GET ALL SUPPLIER");
+//		try {
+//			List<Supplier> listSuppliers = supplierService.getSuppliers();
+//			return new ResponseEntity <List<Supplier>> (listSuppliers,HttpStatus.OK);
+//		}catch(Exception e) {
+//			logger.error("ERROR " + e);
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//	}
 	
 	
 	/**
@@ -508,44 +508,44 @@ public class ControllerApiRest {
 	
 	
 	
-	/**
-	 * localhost:8080/api/insertTransazioneUpdatevenduto
-	 * This method insert a new transaction and update the sellOut of selected idArticolo.
-	 * This is a possibiliy example of sull of one article
-	 * @param transaction : Transaction Object
-	 * @return : new trasaction and update field sellOut of Article of selected idArticle
-	 */
-	@PostMapping(path = "/insertTransazioneUpdatevenduto", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <Transaction> insertTransazioneUpdatevenduto(@RequestBody Transaction transaction){
-		Long idTransaction = (long) 0;
-		Transaction insertTransaction;
-		Scanner s = new Scanner(System.in);
-		
-		try {
-			insertTransaction = transactionService.insert(transaction);
-			idTransaction = insertTransaction.getIdTransazione();
-			logger.info("INSERT A NEW TRANSACTION OK !!");
-		}catch(Exception e) {
-			  logger.error("ERROR: \n", e);
-			  s.close();
-			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-		
-		try {
-			logger.info("UPDATE SELL OUT ARTICLE");
-			System.out.println("INSERISCI L'ID DELL'ARTICOLO VENDUTO");
-			Long idArticolo = s.nextLong();
-			articleService.updateSellOutArticle(idTransaction, 0, idArticolo);
-			logger.info("ARTICOLO VENDUTO, TRANSAZIONE TERMINATA !!");
-			s.close();
-			return new ResponseEntity <Transaction>(insertTransaction,HttpStatus.OK);
-		}catch(Exception e) {
-			  logger.error("ERROR: \n", e);
-			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-		
-		
-	}
+//	/**
+//	 * localhost:8080/api/insertTransazioneUpdatevenduto
+//	 * This method insert a new transaction and update the sellOut of selected idArticolo.
+//	 * This is a possibiliy example of sull of one article
+//	 * @param transaction : Transaction Object
+//	 * @return : new trasaction and update field sellOut of Article of selected idArticle
+//	 */
+//	@PostMapping(path = "/insertTransazioneUpdatevenduto", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity <Transaction> insertTransazioneUpdatevenduto(@RequestBody Transaction transaction){
+//		Long idTransaction = (long) 0;
+//		Transaction insertTransaction;
+//		Scanner s = new Scanner(System.in);
+//		
+//		try {
+//			insertTransaction = transactionService.insert(transaction);
+//			idTransaction = insertTransaction.getIdTransazione();
+//			logger.info("INSERT A NEW TRANSACTION OK !!");
+//		}catch(Exception e) {
+//			  logger.error("ERROR: \n", e);
+//			  s.close();
+//			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//		
+//		try {
+//			logger.info("UPDATE SELL OUT ARTICLE");
+//			System.out.println("INSERISCI L'ID DELL'ARTICOLO VENDUTO");
+//			Long idArticolo = s.nextLong();
+//			articleService.updateSellOutArticle(idTransaction, 0, idArticolo);
+//			logger.info("ARTICOLO VENDUTO, TRANSAZIONE TERMINATA !!");
+//			s.close();
+//			return new ResponseEntity <Transaction>(insertTransaction,HttpStatus.OK);
+//		}catch(Exception e) {
+//			  logger.error("ERROR: \n", e);
+//			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//		
+//		
+//	}
 	
 	
 	
