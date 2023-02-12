@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import it.shop.shoes.dto.ArticleDto;
-import it.shop.shoes.dto.ArticleDtoExample;
-import it.shop.shoes.dto.RicercaDto;
+import it.shop.shoes.dto.DtoBrandCode;
+import it.shop.shoes.dto.RequestInsertTransazione;
+import it.shop.shoes.dto.DtoCodeShop;
 import it.shop.shoes.model.Article;
+import it.shop.shoes.model.Transaction;
 import it.shop.shoes.repository.ArticleRepository;
 import jakarta.transaction.Transactional;
 
@@ -75,10 +77,10 @@ public class ArticleServiceImplement implements ArticleService{
 	/**
 	 * this method convert field Article in field ArticleDtoExample
 	 */
-	public List<ArticleDtoExample> questCodeAndBrand(List<Article> listaArticolo) {
-		List <ArticleDtoExample> listaDtoExample = new ArrayList<>();
+	public List<DtoBrandCode> questCodeAndBrand(List<Article> listaArticolo) {
+		List <DtoBrandCode> listaDtoExample = new ArrayList<>();
 		for (Article a : listaArticolo) {
-			ArticleDtoExample dto = new ArticleDtoExample();
+			DtoBrandCode dto = new DtoBrandCode();
 			dto.setCode(a.getCode());
 			dto.setBrand(a.getBrand());
 			listaDtoExample.add(dto);
@@ -108,7 +110,7 @@ public class ArticleServiceImplement implements ArticleService{
 	 * this method return a list with the selected field query
 	 */
 	@Override
-	public List<Article> ricerca(int negozioId, String codice) {
+	public List<Article> queryRicerca(int negozioId, String codice) {
 		return articleRepository.queryRicerca(negozioId, codice);
 	}
 
@@ -116,10 +118,10 @@ public class ArticleServiceImplement implements ArticleService{
 	 * this method return a list with the selected field from RicercaDto
 	 */
 	@Override
-	public List<RicercaDto> ricercaDto(List<Article> listaArticolo) {
-		List <RicercaDto> listaDto = new ArrayList<>();
+	public List<DtoCodeShop> researchForCodeShop(List<Article> listaArticolo) {
+		List <DtoCodeShop> listaDto = new ArrayList<>();
 		for (Article a : listaArticolo) {
-			RicercaDto dto = new RicercaDto();
+			DtoCodeShop dto = new DtoCodeShop();
 			dto.setCode(a.getCode());
 			dto.setNumberShop(a.getNegozioId().getShopNumber());
 			dto.setSize(a.getSize());
@@ -129,14 +131,14 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 
 
-	/**
-	 * This method insert a new transaction and update the sellOut of selected idArticolo.
-	 * This is a possibility example of sell of one article
-	 */
-	@Override
-	public void updateSellOutArticle(Long transazione_id, int venduto, Long id_articolo) {
-		articleRepository.queryUpdateSellOutArticle(transazione_id, venduto, id_articolo);
-	}
+//	/**
+//	 * This method insert a new transaction and update the sellOut of selected idArticolo.
+//	 * This is a possibility example of sell of one article
+//	 */
+//	@Override
+//	public void updateSellOutArticle(Long transazione_id, int venduto, Long id_articolo) {
+//		articleRepository.queryUpdateSellOutArticle(transazione_id, venduto, id_articolo);
+//	}
 
 
 	/**
@@ -145,6 +147,19 @@ public class ArticleServiceImplement implements ArticleService{
 	@Override
 	public List<Article> researchForBrand(String brand) {
 		return articleRepository.queryForBrand(brand);
+	}
+
+
+	
+	@Override
+	public RequestInsertTransazione requestInsTrans(RequestInsertTransazione r) {
+		Transaction t = new Transaction();
+		Article art = new Article();
+		art.setIdArticolo(r.getIdArticolo());
+		t.setIdTransazione(r.getObjectTransaction().getIdTransazione());
+		t.setFidelityNumber(r.getObjectTransaction().getFidelityNumber());
+		t.setClientId(r.getObjectTransaction().getClientId());
+		return null;
 	}
 
 

@@ -3,7 +3,7 @@ package it.shop.shoes.dto;
 import lombok.Data;
 
 @Data
-public class RicercaDto {
+public class DtoCodeShop {
 
 	private String code;
 	private int size;

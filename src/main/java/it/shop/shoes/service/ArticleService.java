@@ -6,9 +6,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.dto.ArticleDto;
-import it.shop.shoes.dto.ArticleDtoExample;
+import it.shop.shoes.dto.DtoBrandCode;
+import it.shop.shoes.dto.RequestInsertTransazione;
 import it.shop.shoes.model.Article;
-import it.shop.shoes.dto.RicercaDto;
+import it.shop.shoes.dto.DtoCodeShop;
 
 
 
@@ -62,7 +63,7 @@ public interface ArticleService {
 	 * @param article Object
 	 * @return AticleDto Object
 	 */
-	public List<ArticleDtoExample> questCodeAndBrand(List<Article> listaArticolo);
+	public List<DtoBrandCode> questCodeAndBrand(List<Article> listaArticolo);
 	
 	/**
 	 * (value = "SELECT * FROM article WHERE negozio_id =:primoParametro AND codice =:secondoParametro ", nativeQuery = true)
@@ -70,23 +71,23 @@ public interface ArticleService {
 	 * @param codice : code selected
 	 * @return list of article with negozioId and code selected
 	 */
-	public List <Article> ricerca (@Param("primoParametro") int negozioId, @Param("secondoParametro") String codice);
+	public List <Article> queryRicerca (@Param("primoParametro") int negozioId, @Param("secondoParametro") String codice);
 	
 	/**
 	 * this method return a list with the selected field from RicercaDto
 	 * @param listArticle : list of article from queryRicerca
 	 * @return list of RicercaDto
 	 */
-	public List<RicercaDto> ricercaDto(List<Article> listArticle);
+	public List<DtoCodeShop> researchForCodeShop(List<Article> listArticle);
 	
-	/**
-	 * This method insert a new transaction and update the sellOut of selected idArticolo.
-	 * This is a possibiliy example of sull of one article
-	 * @param firstParam : transaction made
-	 * @param secondParam : this value will be 0 because sold
-	 * @param thirdParam : idArticolo that will be purchased
-	 */
-	public void updateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
+//	/**
+//	 * This method insert a new transaction and update the sellOut of selected idArticolo.
+//	 * This is a possibiliy example of sull of one article
+//	 * @param firstParam : transaction made
+//	 * @param secondParam : this value will be 0 because sold
+//	 * @param thirdParam : idArticolo that will be purchased
+//	 */
+//	public void updateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
 	
 	/**
 	 * This method return a list with all articles from one selected brand
@@ -95,4 +96,7 @@ public interface ArticleService {
 	 */
 	public List <Article> researchForBrand (@Param("primoParametro") String brand);
 
+	
+	
+	public RequestInsertTransazione requestInsTrans(RequestInsertTransazione r);
 }
