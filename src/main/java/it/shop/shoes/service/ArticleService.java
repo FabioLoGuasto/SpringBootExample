@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.DtoBrandCode;
 import it.shop.shoes.dto.RequestInsertTransazione;
 import it.shop.shoes.model.Article;
@@ -43,23 +42,9 @@ public interface ArticleService {
 	 */
 	public void delete (Long id);
 	
-	/**
-	 * this method convert field Article in field ArticleDto
-	 * @param article
-	 * @return
-	 */
-	public ArticleDto EntityToDto(Article article);
-	
-	/**
-	 * this method convert field ArticleDto in field Article
-	 * @param articleDto
-	 * @return
-	 */
-	public Article dtoToEntity(ArticleDto articleDto);
-	
 
 	/**
-	 * This method convert field Article in field ArticleDtoExample
+	 * This method convert field Article in field DtoBrandCode
 	 * @param article Object
 	 * @return AticleDto Object
 	 */

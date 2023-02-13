@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.DtoBrandCode;
 import it.shop.shoes.dto.RequestInsertTransazione;
 import it.shop.shoes.dto.DtoCodeShop;
@@ -23,10 +22,9 @@ public class ArticleServiceImplement implements ArticleService{
 	
 	/**
 	 * method for insert new Article.
-	 * Now the field transaction_id is deselected. During the insert there will be null into the database
 	 */
 	public Article insert(Article a) {
-		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId()); 
+		Article art = new Article(a.getIdArticolo(), a.getCode(), a.getSize(), a.getNegozioId(), a.getBrand(), a.getCategory(), a.getPrice(),a.getDiscount(), a.getSeason(), a.getSellOut(),a.getSupplierId(), a.getTransactionId());
 		return articleRepository.save(art);
 	}
 	
@@ -57,57 +55,21 @@ public class ArticleServiceImplement implements ArticleService{
 	
 	
 	/**
-	 * this method convert field Article in field ArticleDto
-	 */
-	public ArticleDto EntityToDto(Article art) {
-		ArticleDto dto = new ArticleDto();
-		dto.setCode(art.getCode());
-		dto.setSize(art.getSize());
-		dto.setNegozioId(art.getNegozioId());
-		dto.setBrand(art.getBrand());
-		dto.setCategory(art.getCategory());
-		dto.setPrice(art.getPrice());
-		dto.setDiscount(art.getDiscount());
-		dto.setSeason(art.getSeason());
-		dto.setSellOut(art.getSellOut());
-		dto.setSupplierId(art.getSupplierId());
-		return dto;
-	}
-	
-	/**
-	 * this method convert field Article in field ArticleDtoExample
+	 * this method convert a list of Article in one list DtoBrandCode (code and brand)
 	 */
 	public List<DtoBrandCode> questCodeAndBrand(List<Article> listaArticolo) {
-		List <DtoBrandCode> listaDtoExample = new ArrayList<>();
+		List <DtoBrandCode> listaDto = new ArrayList<>();
 		for (Article a : listaArticolo) {
 			DtoBrandCode dto = new DtoBrandCode();
 			dto.setCode(a.getCode());
 			dto.setBrand(a.getBrand());
-			listaDtoExample.add(dto);
+			listaDto.add(dto);
 		}
-		return listaDtoExample;
-	}
-
-	/**
-	 * this method convert field ArticleDto in field Article
-	 */
-	public Article dtoToEntity(ArticleDto dto) {
-		Article art = new Article();
-		art.setCode(dto.getCode());
-		art.setSize(dto.getSize());
-		art.setNegozioId(dto.getNegozioId());
-		art.setBrand(dto.getBrand());
-		art.setCategory(dto.getCategory());
-		art.setPrice(dto.getPrice());
-		art.setDiscount(dto.getDiscount());
-		art.setSeason(dto.getSeason());
-		art.setSellOut(dto.getSellOut());
-		art.setSupplierId(dto.getSupplierId());
-		return art;
+		return listaDto;
 	}
 	
 	/**
-	 * this method return a list with the selected field query
+	 * this method return a list of article by field negozioId and codice from query
 	 */
 	@Override
 	public List<Article> queryRicerca(int negozioId, String codice) {
@@ -115,7 +77,8 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 
 	/**
-	 * this method return a list with the selected field from RicercaDto
+	 * this method take a list of article by selected field negozioId and code
+	 * and than return a list with the field of DtoCodeShop (code - size - negozioId)
 	 */
 	@Override
 	public List<DtoCodeShop> researchForCodeShop(List<Article> listaArticolo) {

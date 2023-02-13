@@ -20,10 +20,10 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
 	@Query(value = "SELECT * FROM article WHERE negozio_id =:primoParametro AND codice =:secondoParametro ", nativeQuery = true)
 	public List <Article> queryRicerca (@Param("primoParametro") int negozio_id, @Param("secondoParametro") String codice);
 	
-	@Transactional
-	@Modifying
-	@Query (value = "UPDATE article SET transazione_id =:firstParam, venduto =:secondParam WHERE id_articolo =:thirdParam", nativeQuery = true)
-	public void queryUpdateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
+//	@Transactional
+//	@Modifying
+//	@Query (value = "UPDATE article SET transazione_id =:firstParam, venduto =:secondParam WHERE id_articolo =:thirdParam", nativeQuery = true)
+//	public void queryUpdateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
 	
 	
 	/**

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.shop.shoes.dto.ArticleDto;
 import it.shop.shoes.dto.DtoBrandCode;
 import it.shop.shoes.dto.DtoCodeShop;
 import it.shop.shoes.model.Article;
@@ -115,27 +114,26 @@ public class ControllerArticle {
 		}
 	}	
 	
+	
 	/**
-	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
-	 * localhost:8080/api/article/insertArticleDto
+	 * localhost:8080/api/article/insertArticle
 	 * This is the method for insert new Article.
 	 * @param dto : Object ArticleDto
-	 * @return articleDto : return new Article
+	 * @return newArticle : return new Article
 	 */
-	@PostMapping(path ="/insertArticleDto", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ArticleDto> insertArticleDto(@RequestBody ArticleDto dto){
+	@PostMapping(path ="/insertArticle", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Article> insertArticle(@RequestBody Article article){
 		logger.info("INSERT ARTICLE");
 		try {
-			Article art = articleService.dtoToEntity(dto);
-			art = articleService.insert(art);
-			ArticleDto articleDto = articleService.EntityToDto(art);
+			Article newArticle = articleService.insert(article);
 			logger.info("INSERT OK");
-			return new ResponseEntity<ArticleDto>(articleDto,HttpStatus.CREATED);
+			return new ResponseEntity<Article>(newArticle,HttpStatus.CREATED);
 		}catch (Exception e) {
 			logger.error("ERROR: \n", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}  
 	}
+	
 
 
 	/**
@@ -176,7 +174,7 @@ public class ControllerArticle {
 		  }
 	}
 		
-// ----------------------------------------------------------------------------------------------- METODI VARI
+// ----------------------------------------------------------------------------------------------- METODI IN FASE DI SVILUPPO
 	
 	/**
 	 * le cose le devo passare dall'url

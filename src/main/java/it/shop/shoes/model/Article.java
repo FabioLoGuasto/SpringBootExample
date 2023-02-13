@@ -39,23 +39,6 @@ public class Article {
 		this.transactionId = transactionId;
 	}
 	
-	/**
-	 * Constructor without transaction_id
-	 */
-	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
-			int discount, String season, int sellOut, Supplier supplierId) {
-		this.idArticolo = idArticolo;
-		this.code = code;
-		this.size = size;
-		this.negozioId = negozioId;
-		this.brand = brand;
-		this.category = category;
-		this.price = price;
-		this.discount = discount;
-		this.season = season;
-		this.sellOut = sellOut;
-		this.supplierId = supplierId;
-	}
 	
 	/**
 	 * unique id of article
