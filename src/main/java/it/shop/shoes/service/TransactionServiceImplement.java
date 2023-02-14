@@ -14,9 +14,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class TransactionServiceImplement implements TransactionService{
 
-	@Autowired
-	private TransactionRepository transactionRepository;
-	
+	@Autowired	private TransactionRepository transactionRepository;
 	/**
 	 * insert new transaction
 	 */
@@ -50,5 +48,6 @@ public class TransactionServiceImplement implements TransactionService{
 	public void delete(Long id) {
 		transactionRepository.deleteById(id);
 	}
+	
 
 }

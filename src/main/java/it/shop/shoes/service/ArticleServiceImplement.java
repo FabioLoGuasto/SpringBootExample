@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import it.shop.shoes.dto.DtoBrandCode;
-import it.shop.shoes.dto.RequestInsertTransazione;
 import it.shop.shoes.dto.DtoCodeShop;
 import it.shop.shoes.model.Article;
-import it.shop.shoes.model.Transaction;
 import it.shop.shoes.repository.ArticleRepository;
 import jakarta.transaction.Transactional;
 
@@ -93,36 +91,12 @@ public class ArticleServiceImplement implements ArticleService{
 		return listaDto;
 	}
 
-
-//	/**
-//	 * This method insert a new transaction and update the sellOut of selected idArticolo.
-//	 * This is a possibility example of sell of one article
-//	 */
-//	@Override
-//	public void updateSellOutArticle(Long transazione_id, int venduto, Long id_articolo) {
-//		articleRepository.queryUpdateSellOutArticle(transazione_id, venduto, id_articolo);
-//	}
-
-
 	/**
 	 * This method return a list with all articles from one selected brand
 	 */
 	@Override
 	public List<Article> researchForBrand(String brand) {
 		return articleRepository.queryForBrand(brand);
-	}
-
-
-	
-	@Override
-	public RequestInsertTransazione requestInsTrans(RequestInsertTransazione r) {
-		Transaction t = new Transaction();
-		Article art = new Article();
-		art.setIdArticolo(r.getIdArticolo());
-		t.setIdTransazione(r.getObjectTransaction().getIdTransazione());
-		t.setFidelityNumber(r.getObjectTransaction().getFidelityNumber());
-		t.setClientId(r.getObjectTransaction().getClientId());
-		return null;
 	}
 
 

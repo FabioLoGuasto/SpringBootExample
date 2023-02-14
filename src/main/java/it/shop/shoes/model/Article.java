@@ -44,7 +44,7 @@ public class Article {
 	 * unique id of article
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_articolo")
 	private Long idArticolo;
 	

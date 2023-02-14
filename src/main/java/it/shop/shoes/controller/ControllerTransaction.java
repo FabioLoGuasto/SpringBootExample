@@ -26,6 +26,7 @@ public class ControllerTransaction {
 
 	@Autowired TransactionService transactionService;
 	
+	
 	public static final Logger logger = LoggerFactory.getLogger(ControllerTransaction.class);
 	
 	
@@ -104,4 +105,5 @@ public class ControllerTransaction {
 			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		  }
 	}
+	
 }

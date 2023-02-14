@@ -28,7 +28,7 @@ public class Supplier {
 	 * unique id of supplier
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_fornitore")
 	private Long idFornitore; 
 	

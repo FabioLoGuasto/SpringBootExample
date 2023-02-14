@@ -28,7 +28,7 @@ public class FidelityClient {
 	 * unique id of client
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_cliente")
 	private Long idCliente;
 	

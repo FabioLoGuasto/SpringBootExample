@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.dto.DtoBrandCode;
-import it.shop.shoes.dto.RequestInsertTransazione;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.dto.DtoCodeShop;
 
@@ -81,7 +80,5 @@ public interface ArticleService {
 	 */
 	public List <Article> researchForBrand (@Param("primoParametro") String brand);
 
-	
-	
-	public RequestInsertTransazione requestInsTrans(RequestInsertTransazione r);
+
 }

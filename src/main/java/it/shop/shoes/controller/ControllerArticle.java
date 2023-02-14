@@ -201,49 +201,9 @@ public class ControllerArticle {
 	 * quando ho bisogno della transazione andro a fare get della transazione
 	 * quando ho bisogno dell'articlo faro get dell'articolo 
 	 * 
+	 * 
+	 * mi faccio tornare l'id transazione e in automatico faccio update sulla tabella dell'articolo mettendo l'id transazione
 	 */
-	
-//	/**
-//	 * localhost:8080/api/insertTransazioneUpdatevenduto
-//	 * This method insert a new transaction and update the sellOut of selected idArticolo.
-//	 * This is a possibiliy example of sull of one article
-//	 * @param transaction : Transaction Object
-//	 * @return : new trasaction and update field sellOut of Article of selected idArticle
-//	 */
-//	@PostMapping(path = "/insertTransazioneUpdatevenduto", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity <Transaction> insertTransazioneUpdatevenduto(@RequestBody Transaction transaction){
-//		Long idTransaction = (long) 0;
-//		Transaction insertTransaction;
-//		Scanner s = new Scanner(System.in);
-//		
-//		try {
-//			insertTransaction = transactionService.insert(transaction);
-//			idTransaction = insertTransaction.getIdTransazione();
-//			logger.info("INSERT A NEW TRANSACTION OK !!");
-//		}catch(Exception e) {
-//			  logger.error("ERROR: \n", e);
-//			  s.close();
-//			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//		}
-//		
-//		try {
-//			logger.info("UPDATE SELL OUT ARTICLE");
-//			System.out.println("INSERISCI L'ID DELL'ARTICOLO VENDUTO");
-//			Long idArticolo = s.nextLong();
-//			articleService.updateSellOutArticle(idTransaction, 0, idArticolo);
-//			logger.info("ARTICOLO VENDUTO, TRANSAZIONE TERMINATA !!");
-//			s.close();
-//			return new ResponseEntity <Transaction>(insertTransaction,HttpStatus.OK);
-//		}catch(Exception e) {
-//			  logger.error("ERROR: \n", e);
-//			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//		}
-//		
-//		
-//	}
-	
-	
-	
 	
 	
 }

@@ -32,7 +32,7 @@ public class Transaction {
 	 * unique id of transaction
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_transazione")
 	private Long idTransazione;
 	
