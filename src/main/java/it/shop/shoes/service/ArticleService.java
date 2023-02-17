@@ -70,14 +70,6 @@ public interface ArticleService {
 	 */
 	public List<DtoCodeShop> researchForCodeShop(List<Article> listArticle);
 	
-//	/**
-//	 * This method insert a new transaction and update the sellOut of selected idArticolo.
-//	 * This is a possibiliy example of sull of one article
-//	 * @param firstParam : transaction made
-//	 * @param secondParam : this value will be 0 because sold
-//	 * @param thirdParam : idArticolo that will be purchased
-//	 */
-//	public void updateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
 	
 	/**
 	 * This method return all the article that have that brand entered by the user.
