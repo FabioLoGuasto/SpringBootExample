@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Article {
 	
 
@@ -65,7 +65,7 @@ public class Article {
 	 * id of the shop
 	 * there is relation with shop table
 	 */
-	@OneToOne(fetch = FetchType.LAZY, targetEntity = Shop.class) 
+	@OneToOne(fetch = FetchType.LAZY,targetEntity = Shop.class) 
 	@JoinColumn(nullable = true,name = "negozio_id")
 	private Shop negozioId;
 	
@@ -111,15 +111,15 @@ public class Article {
 	 * id of supplier
 	 * there is a relation with supplier table
 	 */
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Supplier.class)
-	@JoinColumn(nullable = true, name = "fornitore_id")
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Supplier.class) // @ManyToOne di default è EAGER, quindi mettendolo EAGER funziona, ma se io lo voglio LAZY
+	@JoinColumn(nullable = true, name = "fornitore_id") //e fare in modo di caricarlo mettendo LAZY, commentanto nella classe Supllier @jsonignore, da errore
 	private Supplier supplierId;
 	
 	/**
 	 * id of transaction
 	 * there is a relation with transaction table
 	 */
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Transaction.class)
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Transaction.class) //fetch = FetchType.LAZY, 
 	@JoinColumn(nullable = true,name = "transazione_id")
 	private Transaction transactionId;
 	

@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="supplier", schema="negozio_scarpe")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Supplier {
 	
 	/**
@@ -60,8 +60,9 @@ public class Supplier {
 
 	/**
 	 * supplier's list of items
+	 * di default è lazy
 	 */
-	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class , fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "supplierId", targetEntity = Article.class ,cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE}) 
 	private Set <Article> listArticlesOfSupplied = new HashSet<>(); // set non ha duplicati
 
 	

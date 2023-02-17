@@ -35,4 +35,9 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
 	@Query(value = "SELECT * FROM article WHERE brand LIKE %:primoParametro%", nativeQuery = true)
 	public List <Article> queryForBrand (@Param("primoParametro") String brand);
 	
+	
+	@Transactional
+	@Query("SELECT a FROM Article a JOIN FETCH a.negozioId WHERE a.idArticolo =:id")
+    public Article QueryFetch(@Param("id") Long id);
+	
 }

@@ -173,37 +173,26 @@ public class ControllerArticle {
 			  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		  }
 	}
-		
-// ----------------------------------------------------------------------------------------------- METODI IN FASE DI SVILUPPO
+
 	
+	
+	// ----------------------------------------------------------------------------------- METODO IN SVILUPPO
 	/**
-	 * le cose le devo passare dall'url
-	 * id articolo devo passarla dall'url quindi dal paylod
-	 * devo fare una classe apposta che mi mappa quel payload
-	 * creare classe con dentro quel tipo di paylod. una sorta di DTO
-	 * poi mi ricavo tutti gli oggetti da passare
-	 * potrei avere una classe requestInsertTransazione che mi mappa il payload xkè puo capire che abbia delle cose specifiche.
-	 * una classe che ha dentro id_articolo e un oggetto trasazione ed avranno get/set
-	 * 
-	 * payload co postman
-	 * {
-	 * 		id_articolo:
-	 * 		oggetto transazione { id_transazione
-	 * 								numero essera
-	 * 							}
-	 * }
-	 * per fare cio devo fare una classe java che dentro dovrà avere una variabile lond id articolo e un oggetto di tipo transazione che
-	 * è il payload del mio servizio
-	 * 
-	 * sarò io che andrò a prendere i parametri giusti dal payload
-	 * nel metodo nel mio service come parametro di ingresso avrò  variabile requestInsertTransazione (che è la variabile dela classe che mi creo)
-	 * 
-	 * quando ho bisogno della transazione andro a fare get della transazione
-	 * quando ho bisogno dell'articlo faro get dell'articolo 
-	 * 
-	 * 
-	 * mi faccio tornare l'id transazione e in automatico faccio update sulla tabella dell'articolo mettendo l'id transazione
+	 * method for the join fetch
+	 * @param id
+	 * @return
 	 */
+	@GetMapping("/getOneArticleById/{id}")
+	public ResponseEntity <Article> getOneArticleById(@PathVariable("id") Long id){
+		logger.info("GET ARTICLE BY ID WITH JOIN FETCH");
+		 try { 
+			 Article article = articleService.findById(id);
+			 return new ResponseEntity<Article>(article,HttpStatus.OK);
+		 }catch(Exception e) {			 
+			 logger.error("ERROR: \n", e);
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		 }
+	}
 	
 	
 }

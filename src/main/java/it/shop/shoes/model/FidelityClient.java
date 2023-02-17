@@ -54,7 +54,7 @@ public class FidelityClient {
 	 * list of transaction
 	 * there is a relation with transaction table
 	 */
-	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class,fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE}) // fetch = FetchType.LAZY, 
 	private Set<Transaction> listOfTransaction = new HashSet<>();
 	
 

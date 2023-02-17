@@ -43,14 +43,17 @@ public interface ArticleService {
 	
 
 	/**
-	 * This method convert field Article in field DtoBrandCode
+	 * This method takes as parameter the entire list of the Article table, and returns a list with only field
+	 * code and brand declared in the DtoBrandCode class.
 	 * @param article Object
 	 * @return AticleDto Object
 	 */
 	public List<DtoBrandCode> questCodeAndBrand(List<Article> listaArticolo);
 	
 	/**
-	 * (value = "SELECT * FROM article WHERE negozio_id =:primoParametro AND codice =:secondoParametro ", nativeQuery = true)
+	 * This method invokes the query "queryRicerca" which returns all the fields of the Article table, 
+	 * which have a specific code and shopId (chosen by the user).
+	 * 
 	 * @param negozioId : shop selected 
 	 * @param codice : code selected
 	 * @return list of article with negozioId and code selected
@@ -58,7 +61,10 @@ public interface ArticleService {
 	public List <Article> queryRicerca (@Param("primoParametro") int negozioId, @Param("secondoParametro") String codice);
 	
 	/**
-	 * this method return a list with the selected field from RicercaDto
+	 * This method takes as parameter a list of articles determined by the "queryRicerca" query which returns all the fields 
+	 * of the article table that have a specific code (chosen by the user) and a specific id Shop (chosen by the user).
+	 * 
+	 * This method instead will return specific fields that have been declared in the "DtoCodeShop" class
 	 * @param listArticle : list of article from queryRicerca
 	 * @return list of RicercaDto
 	 */
@@ -74,11 +80,18 @@ public interface ArticleService {
 //	public void updateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
 	
 	/**
-	 * This method return a list with all articles from one selected brand
-	 * @param brand : field selected
-	 * @return list of articles for brand
+	 * This method return all the article that have that brand entered by the user.
+	 * @param brand : brand choosen by the user
+	 * @return list of articles for that brand
 	 */
 	public List <Article> researchForBrand (@Param("primoParametro") String brand);
 
+	
+	/**
+	 * This method return one article by idArticle 
+	 * @param id : id of chosen article
+	 * @return : one article
+	 */
+	public Article findById(Long id);
 
 }

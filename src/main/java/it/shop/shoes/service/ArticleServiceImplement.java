@@ -53,7 +53,8 @@ public class ArticleServiceImplement implements ArticleService{
 	
 	
 	/**
-	 * this method convert a list of Article in one list DtoBrandCode (code and brand)
+	 * This method takes as parameter the entire list of the Article table, and returns a list with only field
+	 * code and brand declared in the DtoBrandCode class.
 	 */
 	public List<DtoBrandCode> questCodeAndBrand(List<Article> listaArticolo) {
 		List <DtoBrandCode> listaDto = new ArrayList<>();
@@ -67,7 +68,8 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 	
 	/**
-	 * this method return a list of article by field negozioId and codice from query
+	 * This method invokes the query "queryRicerca" which returns all the fields of the Article table, 
+	 * which have a specific code and shopId (chosen by the user).
 	 */
 	@Override
 	public List<Article> queryRicerca(int negozioId, String codice) {
@@ -75,8 +77,12 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 
 	/**
-	 * this method take a list of article by selected field negozioId and code
-	 * and than return a list with the field of DtoCodeShop (code - size - negozioId)
+	 * This method takes as parameter a list of articles determined by the "queryRicerca" query which returns all the fields 
+	 * of the article table that have a specific code (chosen by the user) and a specific id Shop (chosen by the user).
+	 * 
+	 * This method instead will return specific fields that have been declared in the "DtoCodeShop" class
+	 * 
+	 * This is the second method of method dtoCodeShop of ControllerArticle 
 	 */
 	@Override
 	public List<DtoCodeShop> researchForCodeShop(List<Article> listaArticolo) {
@@ -92,7 +98,9 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 
 	/**
-	 * This method return a list with all articles from one selected brand
+	 * This method takes as input a String, which is a user entered brand.
+	 * 
+	 * The method invokes the "queryForBrand" query which will return all the article that have that brand entered by the user.
 	 */
 	@Override
 	public List<Article> researchForBrand(String brand) {
@@ -100,4 +108,14 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 
 
+	/**
+	 * This method return one article by idArticle 
+	 */
+	@Override
+	public Article findById(Long id) {
+		return articleRepository.QueryFetch(id);
+	}
+
+
+	
 }
