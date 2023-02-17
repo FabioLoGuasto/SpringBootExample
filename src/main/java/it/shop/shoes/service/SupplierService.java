@@ -9,9 +9,30 @@ import it.shop.shoes.model.Supplier;
 @Service
 public interface SupplierService {
 	
-	public Supplier insert(Supplier s); 
+	/**
+	 * insert new supplier
+	 * @param supplier
+	 * @return new supplier
+	 */
+	public Supplier insert(Supplier supplier); 
+	
+	/**
+	 * get list of supplier
+	 * @return list
+	 */
 	public List<Supplier> getSuppliers();
-	public void update(Long id,Supplier s);
+	
+	/**
+	 * update one field of one supplier by id
+	 * @param id : id of supplier
+	 * @param supplier
+	 */
+	public void update(Long id,Supplier supplier);
+	
+	/**
+	 * delete one supplier by id
+	 * @param id : id of supplier
+	 */
 	public void delete (Long id);
 
 }

@@ -7,15 +7,14 @@ import org.springframework.stereotype.Service;
 
 import it.shop.shoes.model.Transaction;
 import it.shop.shoes.repository.TransactionRepository;
+
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
 public class TransactionServiceImplement implements TransactionService{
 
-	@Autowired
-	private TransactionRepository transactionRepository;
-	
+	@Autowired	private TransactionRepository transactionRepository;
 	/**
 	 * insert new transaction
 	 */
@@ -49,5 +48,6 @@ public class TransactionServiceImplement implements TransactionService{
 	public void delete(Long id) {
 		transactionRepository.deleteById(id);
 	}
+	
 
 }

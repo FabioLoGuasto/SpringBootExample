@@ -3,8 +3,9 @@ package it.shop.shoes.dto;
 import lombok.Data;
 
 @Data
-public class ArticleDtoExample {
-	
+public class DtoCodeShop {
+
 	private String code;
-	private String brand;
+	private int size;
+	private int numberShop;
 }

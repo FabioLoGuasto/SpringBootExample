@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
+
 public class FidelityClientImplements implements FidelityClientService{
 
 	@Autowired private FidelityClientRepository fidelityClientRepository;

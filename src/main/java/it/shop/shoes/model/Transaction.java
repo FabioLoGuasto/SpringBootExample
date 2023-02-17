@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +32,7 @@ public class Transaction {
 	 * unique id of transaction
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_transazione")
 	private Long idTransazione;
 	
@@ -46,7 +47,7 @@ public class Transaction {
 	 * id of the client of ther's fidelity card
 	 * there is relation with FidelityClient table
 	 */
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = FidelityClient.class)
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = FidelityClient.class) // fetch = FetchType.LAZY, 
 	@JoinColumn(nullable = true, name = "cliente_id")
 	private FidelityClient clientId;
 
@@ -54,7 +55,7 @@ public class Transaction {
 	 * list Article On Transaction
 	 * ther's a relation with Article table
 	 */
-	@OneToMany(mappedBy = "transactionId", targetEntity = Article.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "transactionId", targetEntity = Article.class,fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE})//fetch = FetchType.LAZY,
 	private Set<Article> listArticleOnTransaction = new HashSet<>();	
 	
 

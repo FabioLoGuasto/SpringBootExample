@@ -1,10 +1,7 @@
 package it.shop.shoes.model;
 
-import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Article {
 	
 
@@ -42,29 +39,12 @@ public class Article {
 		this.transactionId = transactionId;
 	}
 	
-	/**
-	 * Constructor without transaction_id
-	 */
-	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
-			int discount, String season, int sellOut, Supplier supplierId) {
-		this.idArticolo = idArticolo;
-		this.code = code;
-		this.size = size;
-		this.negozioId = negozioId;
-		this.brand = brand;
-		this.category = category;
-		this.price = price;
-		this.discount = discount;
-		this.season = season;
-		this.sellOut = sellOut;
-		this.supplierId = supplierId;
-	}
 	
 	/**
 	 * unique id of article
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_articolo")
 	private Long idArticolo;
 	
@@ -85,7 +65,7 @@ public class Article {
 	 * id of the shop
 	 * there is relation with shop table
 	 */
-	@OneToOne(fetch = FetchType.LAZY, targetEntity = Shop.class) 
+	@OneToOne(fetch = FetchType.LAZY,targetEntity = Shop.class) 
 	@JoinColumn(nullable = true,name = "negozio_id")
 	private Shop negozioId;
 	
@@ -131,15 +111,15 @@ public class Article {
 	 * id of supplier
 	 * there is a relation with supplier table
 	 */
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Supplier.class)
-	@JoinColumn(nullable = true, name = "fornitore_id")
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Supplier.class) // @ManyToOne di default è EAGER, quindi mettendolo EAGER funziona, ma se io lo voglio LAZY
+	@JoinColumn(nullable = true, name = "fornitore_id") //e fare in modo di caricarlo mettendo LAZY, commentanto nella classe Supllier @jsonignore, da errore
 	private Supplier supplierId;
 	
 	/**
 	 * id of transaction
 	 * there is a relation with transaction table
 	 */
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Transaction.class)
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Transaction.class) //fetch = FetchType.LAZY, 
 	@JoinColumn(nullable = true,name = "transazione_id")
 	private Transaction transactionId;
 	
