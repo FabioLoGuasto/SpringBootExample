@@ -19,11 +19,6 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
 	@Query(value = "SELECT * FROM article WHERE negozio_id =:primoParametro AND codice =:secondoParametro ", nativeQuery = true)
 	public List <Article> queryRicerca (@Param("primoParametro") int negozio_id, @Param("secondoParametro") String codice);
 	
-//	@Transactional
-//	@Modifying
-//	@Query (value = "UPDATE article SET transazione_id =:firstParam, venduto =:secondParam WHERE id_articolo =:thirdParam", nativeQuery = true)
-//	public void queryUpdateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
-	
 	
 	/**
 	 * Using Like: select ... like :primoParametro
@@ -40,4 +35,11 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
 	@Query("SELECT a FROM Article a JOIN FETCH a.negozioId WHERE a.idArticolo =:id")
     public Article QueryFetch(@Param("id") Long id);
 	
+	
+//	@Transactional
+//	@Modifying
+//	@Query (value = "UPDATE article SET transazione_id =:firstParam, venduto =:secondParam WHERE id_articolo =:thirdParam", nativeQuery = true)
+//	public void queryUpdateSellOutArticle (@Param("firstParam") Long transazione_id, @Param("secondParam") int venduto, @Param("thirdParam") Long id_articolo);
+	
+
 }
