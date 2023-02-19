@@ -9,6 +9,7 @@ public class ShoesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShoesApplication.class, args);
 		
+
 		// SWAGGER
 		// http://localhost:8080/swagger-ui/index.html
 	}
