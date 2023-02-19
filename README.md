@@ -1,6 +1,7 @@
 # SHOP SHOES
 
 This is my first project with Spring-Boot and i'm learning with goal to enter in this world.
+
 This is a basic project with 5 entities where each (through JpaRepository) has CRUD methods implemented.
 
 # TECHNOLOGIES
@@ -13,7 +14,8 @@ This is a basic project with 5 entities where each (through JpaRepository) has C
 
 # USE
 
+- Run this maven goal : mvn spring-boot:run
+- The application is available on: localhost:8080/api/{url}
 - The database sql file is committed to create it locally.
-- If you use Maven, run the following command in a terminal window (in the complete directory) mvn spring-boot:run
-- Run application directly in your ide, than go to your browser and digit: localhost:8080/api/{url}
+
 

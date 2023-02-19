@@ -15,14 +15,17 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data // Getters/Setters/ToString
 @Entity
 @NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
+//@NamedEntityGraph(name = "graph.Article.negozioId",
+//			attributeNodes = @NamedAttributeNode("negozioId"))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Article {
+public class Article{
 	
-
+	
 	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
 			int discount, String season, int sellOut, Supplier supplierId, Transaction transactionId) {
 		this.idArticolo = idArticolo;

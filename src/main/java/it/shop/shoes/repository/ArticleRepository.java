@@ -8,12 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import it.shop.shoes.model.Article;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article,Long>{
 	
+//	EntityManager em = new EntityManager();
 	
 	@Transactional
 	@Query(value = "SELECT * FROM article WHERE negozio_id =:primoParametro AND codice =:secondoParametro ", nativeQuery = true)
@@ -34,6 +36,12 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
 	@Transactional
 	@Query("SELECT a FROM Article a JOIN FETCH a.negozioId WHERE a.idArticolo =:id")
     public Article QueryFetch(@Param("id") Long id);
+	
+	
+	
+//	Query q = this.em.createQuery("SELECT a FROM Article a JOIN FETCH a.negozioId WHERE a.idArticolo =:id");
+//	q.setParameter("id", negozioId);
+//	newOrder = (Order) q.getSingleResult();
 	
 	
 //	@Transactional

@@ -23,6 +23,7 @@ import it.shop.shoes.dto.DtoBrandCode;
 import it.shop.shoes.dto.DtoCodeShop;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.service.ArticleService;
+import it.shop.shoes.utils.ArticleUtils;
 
 
 /**
@@ -67,8 +68,7 @@ public class ControllerArticle {
 	public ResponseEntity <List<DtoCodeShop>> dtoCodeShop (@RequestParam(value = "primoParametro") int negozioId, @RequestParam(value = "secondoParametro") String codice){
 		logger.info("RICERCA DTO");
 		try {
-			List<Article> listArticle = articleService.queryRicerca(negozioId, codice);
-			List<DtoCodeShop> listDto = articleService.researchForCodeShop(listArticle);
+			List<DtoCodeShop> listDto = articleService.queryRicerca(negozioId, codice);
 			return new ResponseEntity<List<DtoCodeShop>>(listDto, HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR: \n", e);
@@ -87,8 +87,8 @@ public class ControllerArticle {
 	public ResponseEntity <List<DtoBrandCode>> getDtoBrandCode(){
 		logger.info("GET ALL ARTICLES WITH ONLY FIELD BRAND & CODE");
 		try {
-			List<Article> listArticles = this.articleService.getArticles();
-			List<DtoBrandCode> listArticlesDto = articleService.questCodeAndBrand(listArticles);
+//			List<Article> listArticles = this.articleService.getArticles();
+			List<DtoBrandCode> listArticlesDto = ArticleUtils.questCodeAndBrand(articleService.getArticles());
 			return new ResponseEntity <List<DtoBrandCode>> (listArticlesDto,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR " + e);
