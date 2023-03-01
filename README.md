@@ -18,4 +18,6 @@ This is a basic project with 5 entities where each (through JpaRepository) has C
 - The application is available on: localhost:8080/api/{url}
 - The database sql file is committed to create it locally.
 
+# SWAGGER
 
+- Swagger is available on : http://localhost:8080/swagger-ui/index.html

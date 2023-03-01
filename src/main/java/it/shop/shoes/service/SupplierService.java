@@ -34,5 +34,8 @@ public interface SupplierService {
 	 * @param id : id of supplier
 	 */
 	public void delete (Long id);
+	
+	
+	
 
 }

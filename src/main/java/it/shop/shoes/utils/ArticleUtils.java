@@ -3,7 +3,7 @@ package it.shop.shoes.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.shop.shoes.dto.DtoBrandCode;
+import it.shop.shoes.dto.DtoArticle;
 import it.shop.shoes.dto.DtoCodeShop;
 import it.shop.shoes.model.Article;
 
@@ -18,33 +18,42 @@ public class ArticleUtils {
 	 * This is the second method of method dtoCodeShop of ControllerArticle 
 	 */
 	
-	public static List<DtoCodeShop> researchForCodeShop(List<Article> listaArticolo) {
-		List <DtoCodeShop> listaDto = new ArrayList<>();
-		for (Article a : listaArticolo) {
+	public static List<DtoCodeShop> researchForCodeShopMapper(List<Article> listArticles) {
+		List <DtoCodeShop> listDto = new ArrayList<>();
+		for (Article article : listArticles) {
 			DtoCodeShop dto = new DtoCodeShop();
-			dto.setCode(a.getCode());
-			dto.setNumberShop(a.getNegozioId().getShopNumber());
-			dto.setSize(a.getSize());
-			listaDto.add(dto);
+			dto.setCode(article.getCode());
+			dto.setNumberShop(article.getNegozioId().getShopNumber());
+			dto.setSize(article.getSize());
+			listDto.add(dto);
 		}
-		return listaDto;
+		return listDto;
 	}
 	
 	
-	
 	/**
-	 * This method takes as parameter the entire list of the Article table, and returns a list with only field
-	 * code and brand declared in the DtoBrandCode class.
+	 * This method take as parameter a list of article and return a list of DtoArticle 
+	 * @param list
+	 * @return
 	 */
-	public static List<DtoBrandCode> questCodeAndBrand(List<Article> listaArticolo) {
-		List <DtoBrandCode> listaDto = new ArrayList<>();
-		for (Article a : listaArticolo) {
-			DtoBrandCode dto = new DtoBrandCode();
-			dto.setCode(a.getCode());
-			dto.setBrand(a.getBrand());
-			listaDto.add(dto);
+	public static List<DtoArticle> dtoArticleMapper (List <Article> listArticle) {
+		List<DtoArticle> listDto = new ArrayList<>();
+		for(Article article : listArticle) {
+			DtoArticle dto = new DtoArticle();
+			dto.setId(article.getIdArticolo());
+			dto.setCode(article.getCode());
+			dto.setSize(article.getSize());
+			dto.setNegozio(article.getNegozioId().getBranchName());  
+			dto.setBrand(article.getBrand());
+			dto.setCategory(article.getCategory());
+			dto.setPrice(article.getPrice());
+			dto.setDiscount(article.getDiscount());
+			dto.setSellOut(article.getSellOut());
+			dto.setSupplier(article.getSupplierId().getCompanyName()); 
+			listDto.add(dto);
 		}
-		return listaDto;
-	} 
+		return listDto;
+	}
+	
 
 }

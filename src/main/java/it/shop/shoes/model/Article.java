@@ -20,9 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
-//@NamedEntityGraph(name = "graph.Article.negozioId",
-//			attributeNodes = @NamedAttributeNode("negozioId"))
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Article{
 	
 	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
@@ -67,7 +65,7 @@ public class Article{
 	 * id of the shop
 	 * there is relation with shop table
 	 */
-	@OneToOne(fetch = FetchType.LAZY,targetEntity = Shop.class) 
+	@OneToOne(targetEntity = Shop.class) 
 	@JoinColumn(nullable = true,name = "negozio_id")
 	private Shop negozioId;
 	
@@ -112,16 +110,22 @@ public class Article{
 	/**
 	 * id of supplier
 	 * there is a relation with supplier table
+	 * 
+	 * if insert optional = false it's the same at @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	 * @ManyToOne of default is EAGER, with configuration EAGER it's works, 
+	 * but if it's LAZY without @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) it does not work
+	 * 
+	 * FetchType default is EAGER
 	 */
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Supplier.class) // @ManyToOne di default è EAGER, quindi mettendolo EAGER funziona, ma se io lo voglio LAZY
-	@JoinColumn(nullable = true, name = "fornitore_id") //e fare in modo di caricarlo mettendo LAZY, commentanto nella classe Supllier @jsonignore, da errore
+	@ManyToOne(targetEntity = Supplier.class,fetch = FetchType.LAZY) 
+	@JoinColumn(nullable = true, name = "fornitore_id")
 	private Supplier supplierId;
 	
 	/**
 	 * id of transaction
 	 * there is a relation with transaction table
 	 */
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Transaction.class) //fetch = FetchType.LAZY, 
+	@ManyToOne(targetEntity = Transaction.class) 
 	@JoinColumn(nullable = true,name = "transazione_id")
 	private Transaction transactionId;
 	

@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.shop.shoes.dto.DtoBrandCode;
+import it.shop.shoes.dto.DtoArticle;
 import it.shop.shoes.dto.DtoCodeShop;
 import it.shop.shoes.model.Article;
 import it.shop.shoes.service.ArticleService;
-import it.shop.shoes.utils.ArticleUtils;
+
 
 /**
  * @author fabio
@@ -57,13 +57,13 @@ public class ControllerArticle {
 	
 	
 	/**
-	 * localhost:8080/api/article/dtoCodeShop?primoParametro=2&secondoParametro=A008
+	 * localhost:8080/api/article/dtoCodeShop?negozioId=2&codice=A008
 	 * @param negozioId : chosen field negozioId 
 	 * @param codice : chosen field codice
 	 * @return listDto :this method return a list with the selected field from dtoCodeShop
 	 */
 	@GetMapping(path = "/dtoCodeShop", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<DtoCodeShop>> dtoCodeShop (@RequestParam(value = "primoParametro") int negozioId, @RequestParam(value = "secondoParametro") String codice){
+	public ResponseEntity <List<DtoCodeShop>> dtoCodeShop (@RequestParam(value = "negozioId") int negozioId, @RequestParam(value = "codice") String codice){
 		logger.info("RICERCA DTO");
 		try {
 			List<DtoCodeShop> listDto = articleService.queryRicerca(negozioId, codice);
@@ -75,18 +75,36 @@ public class ControllerArticle {
 	}
 	
 	
+//	/**
+//	 * localhost:8080/api/article/getAllArticles
+//	 * This method return a list with all articles from all shops
+//	 * @return listArticles
+//	 */
+//	@GetMapping(path ="/getAllArticles", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity <List<Article>> getAllArticles(){
+//		logger.info("GET ALL ARTICLES");
+//		try {
+//			List<Article> listArticles = this.articleService.getArticles();
+//			return new ResponseEntity <List<Article>> (listArticles,HttpStatus.OK);
+//		}catch(Exception e) {
+//			logger.error("ERROR " + e);
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//	}
+	
+	
+	
 	/**
-	 * https://www.youtube.com/watch?v=SG2gfTPzSQE
-	 * localhost:8080/api/article/getAllArticlesBrandCode
-	 * This method return a list DtoBrandCode (only code & brand of Article)
-	 * @return listArticlesDto 
+	 * localhost:8080/api/article/getDtoArticles
+	 * This method return a list of DtoArticle
+	 * @return listDtoArticles : List of DtoArticle class
 	 */
-	@GetMapping(path ="/getAllArticlesBrandCode", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<DtoBrandCode>> getDtoBrandCode(){
-		logger.info("GET ALL ARTICLES WITH ONLY FIELD BRAND & CODE");
+	@GetMapping(path ="/getDtoArticles", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<DtoArticle>> getDtoArticles(){
+		logger.info("GET ALL ARTICLES DTO");
 		try {
-			List<DtoBrandCode> listArticlesDto = ArticleUtils.questCodeAndBrand(articleService.getArticles());
-			return new ResponseEntity <List<DtoBrandCode>> (listArticlesDto,HttpStatus.OK);
+			List<DtoArticle> listDtoArticles = this.articleService.getDtoArticles();
+			return new ResponseEntity <List<DtoArticle>> (listDtoArticles,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR " + e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -95,21 +113,40 @@ public class ControllerArticle {
 	
 	
 	/**
-	 * localhost:8080/api/article/getAllArticles
-	 * This method return a list with all articles from all shops
+	 * localhost:8080/api/article/getAllArticleFetchSupplier
+	 * This method return a list with all articles by JOIN FETCH with supplierId
 	 * @return listArticles
 	 */
-	@GetMapping(path ="/getAllArticles", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <List<Article>> getAllArticles(){
-		logger.info("GET ALL ARTICLES");
+	@GetMapping(path ="/getAllArticleFetchSupplier", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<Article>> getAllArticleFetchSupplier(){
+		logger.info("GET ALL ARTICLES FETCH");
 		try {
-			List<Article> listArticles = this.articleService.getArticles();
+			List<Article> listArticles = this.articleService.getAllArticleFetchSupplier();
 			return new ResponseEntity <List<Article>> (listArticles,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("ERROR " + e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-	}	
+	}
+	
+	
+	/**
+	 * localhost:8080/api/article/getOneArticleFetchSupplier/{id}
+	 * This method return one articles by JOIN FETCH with supplierId
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(path = "/getOneArticleFetchSupplier/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <Article> getOneArticleFetchSupplier(@PathVariable("id") Long id){
+		logger.info("GET ARTICLE BY ID WITH JOIN FETCH");
+		 try { 
+			 Article article = articleService.getOneArticleFetchSupplier(id);
+			 return new ResponseEntity<Article>(article,HttpStatus.OK);
+		 }catch(Exception e) {			 
+			 logger.error("ERROR: \n", e);
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		 }
+	}
 	
 	
 	/**
@@ -171,25 +208,6 @@ public class ControllerArticle {
 		  }
 	}
 
-	
-	
-	// ----------------------------------------------------------------------------------- METODO IN SVILUPPO
-	/**
-	 * method for the join fetch
-	 * @param id
-	 * @return
-	 */
-	@GetMapping("/getOneArticleById/{id}")
-	public ResponseEntity <Article> getOneArticleById(@PathVariable("id") Long id){
-		logger.info("GET ARTICLE BY ID WITH JOIN FETCH");
-		 try { 
-			 Article article = articleService.findById(id);
-			 return new ResponseEntity<Article>(article,HttpStatus.OK);
-		 }catch(Exception e) {			 
-			 logger.error("ERROR: \n", e);
-			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		 }
-	}
 	
 	
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.model.Transaction;
+import jakarta.transaction.Transactional;
 
+@Transactional
 @Service
 public interface TransactionService {
 

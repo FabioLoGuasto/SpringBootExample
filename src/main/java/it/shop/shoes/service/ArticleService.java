@@ -6,14 +6,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import it.shop.shoes.model.Article;
+import it.shop.shoes.dto.DtoArticle;
 import it.shop.shoes.dto.DtoCodeShop;
+
 
 @Service
 public interface ArticleService {
 
 	/**
 	 * Method for insert new Article.
-	 * Now the field transactionId is deselected. During the insert there will be null into the database
 	 * @param article : new Article from browser
 	 * @return new Article into database
 	 */
@@ -23,7 +24,14 @@ public interface ArticleService {
 	 * Return all articles from Article table
 	 * @return list of articles
 	 */
-	public List<Article> getArticles();
+//	public List<Article> getArticles();
+	
+	/**
+	 * Return all articles from DtoArticle class
+	 * This class have : (id - code - size - negozio - brand - category - price - discount - sellOut - supplier) 
+	 * @return list of DtoArticles
+	 */
+	public List<DtoArticle> getDtoArticles();
 	
 	/**
 	 * Update one row of article from selected id
@@ -56,10 +64,35 @@ public interface ArticleService {
 	public List <Article> researchForBrand (@Param("primoParametro") String brand);
 	
 	/**
-	 * This method return one article by idArticle 
-	 * @param id : id of chosen article
-	 * @return : one article
+	 * In the example code i provided, supplierId refers to the supplier field of the Article entity and idArticle for article choosen.
+	 * 
+	 * The JOIN FETCH syntax in the query specifies that JPA should load the supplier entity along with the Article entity in a single query.
+	 * By doing so, the supplierId field of each article returned by the query will be populated with the corresponding Supplier entity,
+	 * and you can access the properties of the Supplier entity through the idSupplier field of the Article entity.
+	 * 
+	 * @param id of article chosen
+	 * @return article with JOIN FETCH with supplierId
 	 */
-	public Article findById(Long id);
+	public Article getOneArticleFetchSupplier(Long id);
+	
+	
+	/**
+	 * The JOIN FETCH syntax tells JPA to fetch the supplier entity with the Article entity in a single query. 
+	 * Note that you need to specify the fetch attribute on the @ManyToOne and @OneToMany annotations to control 
+	 * the fetch strategy for the related entities. In this example, we use FetchType.LAZY to fetch the related entities lazily, 
+	 * which means that they will be loaded only when accessed. 
+	 * This can help to reduce the amount of data loaded from the database and improve performance.
+	 * 
+	 * In the example code I provided, supplierId refers to the supplier field of the Article entity.
+	 * a is an alias for the Article entity in the JPA query SELECT a FROM Article a JOIN FETCH a.supplierId, and supplierId is a field
+	 * in the Article entity that is annotated with @ManyToOne to indicate a many-to-one relationship with the Customer entity.
+	 * 
+	 * The JOIN FETCH syntax in the query specifies that JPA should load the supplier entity along with the Article entity in a single query.
+	 * By doing so, the supplierId field of each article returned by the query will be populated with the corresponding Supplier entity,
+	 * and you can access the properties of the Supplier entity through the idSupplier field of the Article entity.
+	 * 
+	 * @return List of article with JOIN FETCH with supplierId
+	 */
+	public List<Article> getAllArticleFetchSupplier();
 
 }

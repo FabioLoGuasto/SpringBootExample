@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="fidelity_client", schema="negozio_scarpe")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class FidelityClient {
 	
 	/**
@@ -54,8 +53,8 @@ public class FidelityClient {
 	 * list of transaction
 	 * there is a relation with transaction table
 	 */
-	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class,fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE}) // fetch = FetchType.LAZY, 
-	private Set<Transaction> listOfTransaction = new HashSet<>();
+	@OneToMany(mappedBy = "clientId", targetEntity = Transaction.class,cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE})
+	private Set <Transaction> listOfTransaction = new HashSet<>();
 	
 
 	public FidelityClient(Long idCliente, String fiscalCodeClient, String localityClient, String provinceClient) {
