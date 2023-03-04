@@ -1,7 +1,9 @@
 package it.shop.shoes.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import it.shop.shoes.utils.LazyFieldsFilter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name="article", schema="negozio_scarpe")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Article{
 	
 	public Article(Long idArticolo, String code, int size, Shop negozioId, String brand, String category, double price,
@@ -117,8 +118,9 @@ public class Article{
 	 * 
 	 * FetchType default is EAGER
 	 */
-	@ManyToOne(targetEntity = Supplier.class,fetch = FetchType.LAZY) 
+	@ManyToOne(targetEntity = Supplier.class,fetch = FetchType.LAZY, optional = true) 
 	@JoinColumn(nullable = true, name = "fornitore_id")
+	@JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = LazyFieldsFilter.class)
 	private Supplier supplierId;
 	
 	/**

@@ -24,7 +24,7 @@ public interface ArticleService {
 	 * Return all articles from Article table
 	 * @return list of articles
 	 */
-//	public List<Article> getArticles();
+	public List<Article> getArticles();
 	
 	/**
 	 * Return all articles from DtoArticle class

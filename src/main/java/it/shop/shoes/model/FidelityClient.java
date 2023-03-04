@@ -3,8 +3,6 @@ package it.shop.shoes.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +18,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="fidelity_client", schema="negozio_scarpe")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class FidelityClient {
 	
 	/**

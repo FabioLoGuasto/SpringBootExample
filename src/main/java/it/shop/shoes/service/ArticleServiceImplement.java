@@ -29,13 +29,13 @@ public class ArticleServiceImplement implements ArticleService{
 	}
 	
 	
-//	/**
-//	 * this method get a list of all articles from all shops
-//	 */
-//	@Transactional
-//	public List<Article> getArticles() {
-//		return articleRepository.findAll();
-//	}
+	/**
+	 * this method get a list of all articles from all shops
+	 */
+	@Transactional
+	public List<Article> getArticles() {
+		return articleRepository.findAll();
+	}
 	
 	
 	/**
@@ -133,5 +133,4 @@ public class ArticleServiceImplement implements ArticleService{
 		return articleRepository.queryGetAllArticleFetchSupplier();
 	}
 
-	
 }

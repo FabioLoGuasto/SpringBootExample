@@ -75,22 +75,22 @@ public class ControllerArticle {
 	}
 	
 	
-//	/**
-//	 * localhost:8080/api/article/getAllArticles
-//	 * This method return a list with all articles from all shops
-//	 * @return listArticles
-//	 */
-//	@GetMapping(path ="/getAllArticles", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity <List<Article>> getAllArticles(){
-//		logger.info("GET ALL ARTICLES");
-//		try {
-//			List<Article> listArticles = this.articleService.getArticles();
-//			return new ResponseEntity <List<Article>> (listArticles,HttpStatus.OK);
-//		}catch(Exception e) {
-//			logger.error("ERROR " + e);
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//		}
-//	}
+	/**
+	 * localhost:8080/api/article/getAllArticles
+	 * This method return a list with all articles from all shops
+	 * @return listArticles
+	 */
+	@GetMapping(path ="/getAllArticles", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <List<Article>> getAllArticles(){
+		logger.info("GET ALL ARTICLES");
+		try {
+			List<Article> listArticles = this.articleService.getArticles();
+			return new ResponseEntity <List<Article>> (listArticles,HttpStatus.OK);
+		}catch(Exception e) {
+			logger.error("ERROR " + e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 	
 	
 	
@@ -208,6 +208,4 @@ public class ControllerArticle {
 		  }
 	}
 
-	
-	
 }
