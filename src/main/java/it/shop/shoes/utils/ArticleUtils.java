@@ -7,6 +7,7 @@ import it.shop.shoes.dto.DtoArticle;
 import it.shop.shoes.dto.DtoCodeShop;
 import it.shop.shoes.model.Article;
 
+
 public class ArticleUtils {
 	
 	/**
@@ -18,17 +19,33 @@ public class ArticleUtils {
 	 * This is the second method of method dtoCodeShop of ControllerArticle 
 	 */
 	
+//	public static List<DtoCodeShop> researchForCodeShopMapper(List<Article> listArticles) {
+//		List <DtoCodeShop> listDto = new ArrayList<>();
+//		for (Article article : listArticles) {
+//			DtoCodeShop dto = new DtoCodeShop();
+//			dto.setCode(article.getCode());
+//			dto.setNumberShop(article.getNegozioId().getShopNumber());
+//			dto.setSize(article.getSize());
+//			listDto.add(dto);
+//		}
+//		return listDto;
+//	}
+	
 	public static List<DtoCodeShop> researchForCodeShopMapper(List<Article> listArticles) {
-		List <DtoCodeShop> listDto = new ArrayList<>();
-		for (Article article : listArticles) {
-			DtoCodeShop dto = new DtoCodeShop();
-			dto.setCode(article.getCode());
-			dto.setNumberShop(article.getNegozioId().getShopNumber());
-			dto.setSize(article.getSize());
-			listDto.add(dto);
-		}
-		return listDto;
+	    return listArticles.stream()
+	        .map(article -> {
+	            DtoCodeShop dto = new DtoCodeShop();
+	            dto.setCode(article.getCode());
+	            dto.setNumberShop(article.getNegozioId().getShopNumber());
+	            dto.setSize(article.getSize());
+	            return dto;
+	        }).toList();
 	}
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -36,23 +53,41 @@ public class ArticleUtils {
 	 * @param list
 	 * @return
 	 */
+//	public static List<DtoArticle> dtoArticleMapper (List <Article> listArticle) {
+//		List<DtoArticle> listDto = new ArrayList<>();
+//		for(Article article : listArticle) {
+//			DtoArticle dto = new DtoArticle();
+//			dto.setId(article.getIdArticolo());
+//			dto.setCode(article.getCode());
+//			dto.setSize(article.getSize());
+//			dto.setNegozio(article.getNegozioId().getBranchName());  
+//			dto.setBrand(article.getBrand());
+//			dto.setCategory(article.getCategory());
+//			dto.setPrice(article.getPrice());
+//			dto.setDiscount(article.getDiscount());
+//			dto.setSellOut(article.getSellOut());
+//			dto.setSupplier(article.getSupplierId().getCompanyName()); 
+//			listDto.add(dto);
+//		}
+//		return listDto;
+//	}
+	
 	public static List<DtoArticle> dtoArticleMapper (List <Article> listArticle) {
-		List<DtoArticle> listDto = new ArrayList<>();
-		for(Article article : listArticle) {
-			DtoArticle dto = new DtoArticle();
-			dto.setId(article.getIdArticolo());
-			dto.setCode(article.getCode());
-			dto.setSize(article.getSize());
-			dto.setNegozio(article.getNegozioId().getBranchName());  
-			dto.setBrand(article.getBrand());
-			dto.setCategory(article.getCategory());
-			dto.setPrice(article.getPrice());
-			dto.setDiscount(article.getDiscount());
-			dto.setSellOut(article.getSellOut());
-			dto.setSupplier(article.getSupplierId().getCompanyName()); 
-			listDto.add(dto);
-		}
-		return listDto;
+		return listArticle.stream()
+				.map(article -> {
+					DtoArticle dto = new DtoArticle();
+					dto.setId(article.getIdArticolo());
+					dto.setCode(article.getCode());
+					dto.setSize(article.getSize());
+					dto.setNegozio(article.getNegozioId().getBranchName());  
+					dto.setBrand(article.getBrand());
+					dto.setCategory(article.getCategory());
+					dto.setPrice(article.getPrice());
+					dto.setDiscount(article.getDiscount());
+					dto.setSellOut(article.getSellOut());
+					dto.setSupplier(article.getSupplierId().getCompanyName()); 
+					return dto;
+				}).toList();
 	}
 	
 

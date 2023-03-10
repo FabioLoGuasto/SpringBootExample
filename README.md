@@ -1,4 +1,4 @@
-# SHOP SHOES
+# SpringBootExample
 
 This is my first project with Spring-Boot and i'm learning with goal to enter in this world.
 
